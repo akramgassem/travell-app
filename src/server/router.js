@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const history = require('./history.js')
+const history = require('./history.js');
 
 // app listen to params 
 router.get('/all/', history.getData);
