@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const history = require('./history.js');
+const pixa = require('./pixabay.js');
 
 // app listen to params 
 router.get('/all/', history.getData);
+router.get('/pixa/', pixa.getPIXA);
 
 module.exports = router;
 

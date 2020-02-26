@@ -2,3 +2,21 @@ html {
     background-color: #1d1d29;
     font-size: 16px;
 }
+
+
+.notifications {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    min-width: 300px;
+    transition: all .25s ease-in;
+
+}
+.notification {
+    min-width: 300px;
+    
+    &.hide {
+        transform:  translateX(400px);
+        transition: all .25s ease-in;
+    }
+}
