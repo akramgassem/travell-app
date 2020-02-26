@@ -11,7 +11,7 @@ module.exports = {
 	stats: 'normal',
 	output: {
 		libraryTarget: 'var',
-		library: 'Client'
+		library: 'APP'
 	},
 	module: {
 		rules: [
@@ -24,6 +24,14 @@ module.exports = {
 					'sass-loader'
 				]
 			},
+			{
+				test: /\.(png|jpe?g|gif)$/i,
+				use: [
+				  {
+					loader: 'file-loader',
+				  },
+				],
+			  },
 			{
 				test: '/.js$/',
 				exclude: /node_modules/,
