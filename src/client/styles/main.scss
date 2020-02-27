@@ -1,0 +1,25 @@
+.pixa-image-container {
+  border-radius: 5px;
+  max-width: 860px;
+  height: 60vh;
+  margin: auto;
+  margin-top: 16px;
+  background-color:  #29293a;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.overlay {
+  max-width: 860px;
+  height: 60vh;
+  background-color: #29293a;
+  opacity: .4;
+}
+
+#reload {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+}

@@ -3,16 +3,16 @@ require("dotenv").config();
 const request = require("request");
 
 const getPIXA = (req, res) => {
-  let query = req.body || "travel";
+  console.log(req.body);
+  
+  let query = isEmpty(req.body) ? [] : req.body;
+  let categorie = 'travel';
   const API_KEY = process.env.PIXA_KEY;
   const URL =
-    "https://pixabay.com/api/?key=" +
-    API_KEY +
-    "&q=" +
-    encodeURIComponent(query) +
-    "&image_type=photo" +
-    "&safesearch=true" +
-    "&orientation=horizontal";
+		'https://pixabay.com/api/?key=' +
+		API_KEY +
+		'&q=' +
+		encodeURIComponent(query.join('+'));
   request(URL, (error, response, body) => {
     if (error === null) {
       res.send({
@@ -31,3 +31,14 @@ const getPIXA = (req, res) => {
 module.exports = {
   getPIXA
 };
+
+
+function isEmpty(obj) {
+	for (var prop in obj) {
+		if (obj.hasOwnProperty(prop)) {
+			return false;
+		}
+	}
+
+	return JSON.stringify(obj) === JSON.stringify({});
+}

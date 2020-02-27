@@ -40,9 +40,9 @@ export default class MessagePopUp {
             const timer = setInterval(() => {
                 const container = document.querySelector('.notifications');
                 container.removeChild(this);
+                window.clearTimeout(timer);
             }, 2000);
 
-            window.clearTimeout(timer);
         }
     }
 

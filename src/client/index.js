@@ -6,6 +6,7 @@ import MessagePopUp from './js/message-pop-up';
 import './styles/layout.scss';
 import './styles/base.scss';
 import './styles/header.scss';
+import './styles/main.scss';
 import './styles/form.scss';
 import './styles/footer.scss';
 
