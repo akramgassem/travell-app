@@ -29,6 +29,7 @@ export default class PixaImages {
 
     container.innerHTML = `
     <div class="logo-container"></div>
+    <div class="form-container"></div>
             <div class="overlay"></div>
             <div id="tags" class="tags">${this.tags}</div>
             <div id="links" class="links">
@@ -41,8 +42,9 @@ export default class PixaImages {
             <span id="reload">Reload</span>
             </button>
         `;
-    await this._populateUi(container);
-    this._logoContainer();
+        this._logoContainer();
+        this._formContainer();
+        await this._populateUi(container);
 
     container.addEventListener("click", this.handleReload, false);
     this.element = container;
@@ -131,6 +133,13 @@ export default class PixaImages {
     img.src = APP.logo;
     img.alt = "travel-app logo";
     relative.append(img);
+    container.append(relative);
+  }
+
+  _formContainer() {
+    const container = document.querySelector(".form-container");
+    const relative = this._createElement("form-relative", 'search-form');
+    new APP.SearchForm(relative);
     container.append(relative);
   }
 }

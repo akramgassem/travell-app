@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-	entry: './src/client/index.js',
+	entry: './src/client/js/index.js',
 	mode: 'development',
 	devtool: 'source-map',
 	stats: 'normal',

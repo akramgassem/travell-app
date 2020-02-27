@@ -1,0 +1,20 @@
+.form-container {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    width: 96%;
+    max-width: 680px;
+    min-width: 250px;
+  
+    .form-relative {
+      position: relative; 
+      left: -50%;
+    }
+  }
+
+  input {
+      opacity: .4;
+      &:hover {
+          opacity: 1;
+      }
+  }
