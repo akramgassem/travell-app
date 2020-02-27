@@ -26,10 +26,9 @@ export {
 
 
 const handleLoad = async (ev)=> {
-    logoContainer();
     const get = await APP.getData('/all/');
    
-    new PixaImages();
+    new PixaImages(6);
     
     new MessagePopUp('Hello my friend!', 'success');
     if (get.data.length === 0) {

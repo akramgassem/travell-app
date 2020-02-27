@@ -5,7 +5,7 @@ const pixa = require('./pixabay.js');
 
 // app listen to params 
 router.get('/all/', history.getData);
-router.get('/pixa/', pixa.getPIXA);
+router.post('/pixa/', pixa.getPIXA);
 
 module.exports = router;
 
