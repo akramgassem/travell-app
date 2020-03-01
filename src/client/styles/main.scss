@@ -35,6 +35,10 @@ $font-special: "Patua One";
   position: absolute;
   top: 6px;
   right: 6px;
+  opacity: .2;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 #tags {
@@ -44,7 +48,7 @@ $font-special: "Patua One";
   color: #fc9086a9;
 }
 
-#links {
+.links {
   position: absolute;
   font-size: 13px;
   bottom: 6px;
@@ -72,3 +76,44 @@ $font-special: "Patua One";
     left: -50%;
   }
 }
+
+#user-location{
+    margin: auto;
+    max-width: 1200px;
+    transition: all .25s ease-in-out;
+    opacity: 1;
+  &.is-hidden {
+    transition: all .25s ease-in-out;
+    opacity: 0;
+  }
+}
+
+.weather-card {
+  padding: 1em;
+  background-color: #e2e2e2;
+  border-radius: 5px;
+  min-width: 300px;
+  transition: all .25s ease-out;
+
+  p {
+    display: flex;
+    .prop{
+      font-weight: bold;
+      flex: 1 auto;
+    }
+    .value {
+      color: #fc9086;
+    }
+  }
+
+  &.collapse {
+    height: 100px;
+    overflow: hidden;
+    transition: all .25s ease-out;
+  }
+}
+
+.more-container {
+  left: 0;
+}
+

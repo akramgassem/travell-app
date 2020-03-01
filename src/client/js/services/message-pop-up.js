@@ -2,28 +2,17 @@ let _counter = 0;
 
 export default class MessagePopUp {
   constructor(message, color) {
-    const classnames = {
-      info: "is-info",
-      danger: "is-danger",
-      success: "is-success",
-      warning: "is-warning"
-    };
     this._message = message;
-    this._color = classnames[color];
-    this.id = this._ID();
+    this._color = "is-" + color;
+    this.id = APP.ID();
     this.element = null;
     this.timerDelete = null;
     this._handleDelete = this._handleDelete.bind(this);
     this._createUi();
   }
 
-  _ID() {
-    return (
-      "_" +
-      Math.random()
-        .toString(36)
-        .substr(2, 9)
-    );
+  static show(message, color) {
+    return new MessagePopUp(message, color);
   }
 
   _createUi() {
@@ -39,8 +28,7 @@ export default class MessagePopUp {
     this.element = article;
 
     _counter++;
-    this.setTimeout(_counter * 1000, () => {
-
+    this._setTimeout(_counter * 1000, () => {
       const notifications = document.querySelector(".notifications");
       notifications.prepend(article);
       article.addEventListener("click", this._handleDelete);
@@ -51,24 +39,24 @@ export default class MessagePopUp {
 
   _handleDelete(ev) {
     if (ev.target.getAttribute("id") === this.id + "_delete") {
-      this._deleteElement(this.element, 300, false);
+      this._deleteElement(this.element, 50, false);
     }
   }
 
   _deleteElement(el, delay, condition) {
-    this.setTimeout(delay, () => {
+    this._setTimeout(delay, () => {
       _counter--;
       el.classList.toggle("hide");
 
       if (condition) {
-        this.setTimeout(600, () => {
+        this._setTimeout(600, () => {
           el.parentNode.removeChild(el);
         });
       }
     });
   }
 
-  setTimeout(delay, fn) {
+  _setTimeout(delay, fn) {
     const h = setTimeout(() => {
       window.clearTimeout(h);
       fn();

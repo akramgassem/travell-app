@@ -1,20 +1,94 @@
 .form-container {
-    position: absolute;
-    bottom: 20%;
-    left: 50%;
-    width: 96%;
-    max-width: 680px;
-    min-width: 250px;
-  
-    .form-relative {
-      position: relative; 
-      left: -50%;
-    }
+  position: absolute;
+  z-index: 20;
+  bottom: 20%;
+  left: 50%;
+  width: 96%;
+  max-width: 680px;
+  min-width: 250px;
+
+  .form-relative, .help-container {
+    position: relative;
+    left: -50%;
   }
 
-  input {
-      opacity: .4;
-      &:hover {
-          opacity: 1;
-      }
+}
+
+.field.has-addons {
+  justify-content: center;
+}
+
+.input {
+  background-color: #1d1d29d0;
+  border-color: transparent;
+  color: #fc9086a9;
+  &::placeholder {
+    color: #fc9086a9;
+    opacity: 0.8; /* Firefox */
   }
+  &:hover {
+    border-color: #fc908641;
+  }
+}
+
+.input-button-icon {
+  position: relative;
+  .icon {
+    position: absolute;
+    left: 0;
+  }
+}
+
+
+#place-help{
+  margin-bottom: 1em;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: -28%;
+  right: 87%;
+  & .autocomplete-active {
+    background-color: #fc9086 !important;
+    color: #1a1a1a;
+    .focus {
+      color: #1a1a1a;
+      font-weight: normal;
+    }
+  }
+  .coutrie-container {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #1d1d29d0;
+    border-bottom: 1px solid #fc90861a;
+    color: #c4c4c4d3;
+    &:hover {
+      /*when hovering an item:*/
+      background-color: #1d1d29;
+    }
+
+    .countrie-name {
+      display: flex;
+      align-items: center;
+      .flag {
+        width: 35px;
+        height: 25px;
+        overflow: hidden;
+        margin-right: 12px;
+        border-radius: 5px;
+      }
+    }
+   
+  }
+}
+.focus {
+  color: #fc9086a9;
+  font-weight: bold;
+}

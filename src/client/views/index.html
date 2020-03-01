@@ -1,36 +1,111 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Travel app</title>
-    <script src="https://kit.fontawesome.com/00118e4b7c.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script
+      src="https://kit.fontawesome.com/00118e4b7c.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
+  </head>
 
-</head>
-
-<body class="main-grid">
-    
-    
-
-    <header>
-       
-    </header>
+  <body class="main-grid">
+    <header></header>
 
     <main id="main">
-
+      <div id="user-location" class="is-hidden"></div>
+      <div class="pixa-image-container">
         
+        <div class="logo-container">
+          <div class="logo-relative">
+            <img id="logo" src="" alt="travel-app logo">
+          </div>
+        </div>
+
+        <form id="searchBarForm">
+          <div class="form-container">
+            <div class="help-container">
+              <p id="place-help" class="help has-text-centered is-warning"></p>
+            </div>
+            <div class="form-relative">
+              <div class="field has-addons">
+                <div class="control">
+                  <input
+                    name="placeInput"
+                    class="input is-rounded is-medium"
+                    type="text"
+                    value=""
+                    autocomplete="off"
+                    placeholder="Where ?"
+                  />
+                </div>
+                <div class="control">
+                  <button
+                    name="addButton"
+                    class="button is-rounded is-medium is-danger"
+                  >
+                    <span class="icon has-text-warning is-medium ">
+                      <i class="fas fa-lg fa-plus"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="control">
+                  <button
+                    name="submitButton"
+                    type="submit"
+                    class="button is-rounded is-medium is-warning"
+                  >
+                    <span class="icon has-text-dark is-medium ">
+                      <i class="fas fa-lg fa-map-marker-alt"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        
+        <div class="overlay"></div>
+
+        <button id="reload"  class="button reload is-medium is-warning is-rounded">
+          <span id="reload" class="icon is-small is-medium">
+            <i id="reload" class="fas fa-lg fa-camera-retro"></i>
+          </span>
+        </button>
+
+
+        <div id="tags" class="tags"></div>
+        <div  class="links">
+          <a id="link" class="is-link" href="#" target="_blank">
+            <div >Pixabay-user: <span id="user"></span></div>
+            <div >Views: <span id="views"></span></div>
+          </a>
+        </div>
+      </div>
+
+      <section  class="section">
+        <div id="results" class="columns is-mobile">
+
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
-        <div class="content has-text-centered">
-            <p>Developped by Akram Gassem</p>
-        </div>
+      <div class="content has-text-centered">
+        <p>Developped by Akram Gassem</p>
+      </div>
     </footer>
     <script>
-    // Check that service workers are supported
-        /**
+      // Check that service workers are supported
+      /**
          if ('serviceWorker' in navigator) {
              // Use the window load event to keep the page load performant
              window.addEventListener('load', () => {
@@ -40,6 +115,5 @@
         */
     </script>
     <div class="notifications"></div>
-</body>
-
+  </body>
 </html>

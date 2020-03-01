@@ -2,10 +2,14 @@ const express = require('express');
 const router = express.Router();
 const history = require('./history.js');
 const pixa = require('./pixabay.js');
+const countries = require('./countries.js');
 
 // app listen to params 
 router.get('/all/', history.getData);
 router.post('/pixa/', pixa.getPIXA);
+router.get('/countries/', countries.getAll);
+router.post('/geonames/', countries.geoNames);
+router.post('/weather/', countries.darkSky);
 
 module.exports = router;
 
