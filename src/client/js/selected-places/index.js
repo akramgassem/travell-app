@@ -52,7 +52,9 @@ export default class SelectedPlaces {
     </div>
     </div>
     <div class="weather-card" id="${this.id}">
-    
+    <p>
+    <img src="${APP.weatherIcon(icon)}" alt="${icon} icon">
+    </p>
     <p>
     <span class="prop">Feels like: </span>
     <span class="value"> ${APP.convertSI(apparentTemperature)} °C / ${apparentTemperature} °F</span>

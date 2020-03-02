@@ -34,7 +34,21 @@ const convertSI = (F) => {
   return  Math.floor((F - 32) * 5/9 );
 };
 
-
+const weatherIcon = (str) => {
+  const icons = {
+    'clear-day': APP.clearDay,
+    'clear-night': APP.clearNight,
+    'cloudy': APP.cloudy,
+    'fog': APP.fog,
+    'partly-cloudy-day': APP.partyCloudyDay,
+    'partly-cloudy-night': APP.partyCloudyNight,
+    'rain': APP.rain,
+    'sleet': APP.sleet,
+    'snow': APP.snow,
+    'wind': APP.wind
+  };
+  return icons[str];
+};
 
 
 
@@ -44,5 +58,6 @@ module.exports = {
   logo,
   ID,
   convertSI,
-  setTimeout
+  setTimeout,
+  weatherIcon
 };
