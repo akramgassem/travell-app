@@ -1,9 +1,9 @@
 
 .main-grid {
     display: grid;
-    grid-template: 'head head head' 10vh
+    grid-template: 'head head head' 8vh
                     'main main main' minmax(100vh, auto)
-                    'footer footer footer' 200px
+                    'footer footer footer' 60px
     ;
 }
 

@@ -10,6 +10,7 @@ export default class HeaderScreen {
     this._handleReload = this._handleReload.bind(this);
     this.timer = null;
     this.query = query;
+    this.currentImageUrl = null;
     //this.formSubmitted = false;
 
     this._init();
@@ -35,7 +36,7 @@ export default class HeaderScreen {
   async refresh(query) {
     this.images = await APP.refreshImages(query);
     window.clearTimeout(this.timer);
-    this._populateUi(query);
+    this._populateUi();
   }
     
 
@@ -48,7 +49,7 @@ export default class HeaderScreen {
 
   _updateFields(int) {
     const image = this.images[int];
-
+    this.currentImageUrl = image.largeImageURL;
     this.element.style.backgroundImage = `url(${image.largeImageURL})`;
     this.tags.innerText = image.tags;
     this.link.href = image.pageURL;

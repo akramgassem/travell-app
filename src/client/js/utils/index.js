@@ -11,8 +11,8 @@ const randomInt = max => {
 };
 
 const logo = () => {
-  const logo = document.querySelector("#logo");
-  logo.src = APP.logoImg;
+  const logos = document.querySelectorAll(".logo");
+  [...logos].forEach(el => el.src = APP.logoImg);
 };
 
 
@@ -40,8 +40,8 @@ const weatherIcon = (str) => {
     'clear-night': APP.clearNight,
     'cloudy': APP.cloudy,
     'fog': APP.fog,
-    'partly-cloudy-day': APP.partyCloudyDay,
-    'partly-cloudy-night': APP.partyCloudyNight,
+    'partly-cloudy-day': APP.partlyCloudyDay,
+    'partly-cloudy-night': APP.partlyCloudyNight,
     'rain': APP.rain,
     'sleet': APP.sleet,
     'snow': APP.snow,

@@ -65,8 +65,12 @@ const getGeoNames = async ({lat, lon}) => {
 };
 
 
-const weather = async ({lat, lon}) => {
-  const weather = await postData('/weather/', {lat, lon});
+const weather = async ({lat, lon, time}) => {
+  const weather = await postData('/weather/', {
+		lat,
+		lon,
+		time: time.format()
+	});
   return JSON.parse(weather.data);
 };
 
@@ -101,9 +105,15 @@ const refreshImages = async (query) => {
   return await getImagesByQuery(query);
 };
 
+const addData = async (data) => {
+  const post = await postData('/add/', data);
+  return post;
+};
+
 module.exports = {
     getData,
     postData,
+    addData,
     getCountries,
     getImagesByQuery,
     cachedImages,

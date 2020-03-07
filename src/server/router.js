@@ -5,6 +5,8 @@ const pixa = require('./pixabay.js');
 const countries = require('./countries.js');
 
 // app listen to params 
+router.post('/add/', history.postData);
+router.post('/delete/', history.deleteDataItem);
 router.get('/all/', history.getData);
 router.post('/pixa/', pixa.getPIXA);
 router.get('/countries/', countries.getAll);

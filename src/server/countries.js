@@ -41,8 +41,9 @@ const geoNames = (req, res) => {
 
 
 const darkSky = (req, res) => {
-  const { lat, lon } = req.body !== {} ? req.body : {lat: '47.3', lon: '9' };
-  const GEOURL = `https://api.darksky.net/forecast/${process.env.SKY_KEY}/${lat},${lon}`;
+  const { lat, lon, time } =
+		req.body !== {}	? req.body : { lat: '47.3', lon: '9', time: '2020-03-06T17:19:43+01:00' };
+  const GEOURL = `https://api.darksky.net/forecast/${process.env.SKY_KEY}/${lat},${lon},${time}?units=si`;
   request(GEOURL, (error, response, body) => {
     if (error === null) {
       res.send({

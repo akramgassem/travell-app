@@ -18,7 +18,41 @@
   </head>
 
   <body class="main-grid">
-    <header></header>
+    <header>
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="#">
+      <img class="logo" src="" width="auto" height="28">
+    </a>
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary">
+            <strong>Sign up</strong>
+          </a>
+          <a class="button is-light">
+            Log in
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+    </header>
 
     <main id="main">
       <div id="user-location" class="is-hidden"></div>
@@ -26,7 +60,7 @@
         
         <div class="logo-container">
           <div class="logo-relative">
-            <img id="logo" src="" alt="travel-app logo">
+            <img class="logo" src="" alt="travel-app logo">
           </div>
         </div>
 
@@ -48,14 +82,14 @@
                   />
                 </div>
                 <div class="control">
-                  <button
-                    name="addButton"
-                    class="button is-rounded is-medium is-danger"
-                  >
-                    <span class="icon has-text-warning is-medium ">
-                      <i class="fas fa-lg fa-plus"></i>
-                    </span>
-                  </button>
+                  <input
+                    name="timeInput"
+                    class="input is-rounded is-medium"
+                    type="date"
+                    value=""
+                    autocomplete="off"
+                    placeholder="When ?"
+                  />
                 </div>
                 <div class="control">
                   <button
@@ -92,7 +126,7 @@
       </div>
 
       <section  class="section">
-        <div id="results" class="columns is-mobile">
+        <div id="results" class="results">
 
         </div>
       </section>

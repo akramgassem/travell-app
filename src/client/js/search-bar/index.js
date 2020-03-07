@@ -4,7 +4,7 @@ export default class SearchBar {
     this.form = null;
     this.help = null;
     this._formHandler = this._formHandler.bind(this);
-    this._handleInput = this.__handleInput.bind(this);
+    this._handleInput = this._handleInput.bind(this);
     this._handleKeyInput = this._handleKeyInput.bind(this);
     this._clickOut = this._clickOut.bind(this);
     this.countries = null;
@@ -40,7 +40,7 @@ export default class SearchBar {
     this._submitValue(ev);
   }
 
-  __handleInput() {
+  _handleInput() {
     let inputValue = this.form.placeInput.value;
     this._closeAllLists();
     if (!inputValue) {
@@ -120,18 +120,30 @@ export default class SearchBar {
   }
 
   _submitValue(ev) {
-    if (this.form.placeInput.value === "") {
-      this.form.placeInput.focus();
-      ev.preventDefault();
-      this.help.innerText = "Oops! forgot to put a place?";
-      return;
-    } else {
-      ev.preventDefault();
-      this.header.refresh([this.form.placeInput.value]);
-      APP.SelectedPlaces.init(this._place);
-      this.form.placeInput.value = "";
-      this.help.innerText = "";
-    }
+    if (this.form.placeInput.value === '' ) {
+			this.form.placeInput.focus();
+			ev.preventDefault();
+			this.help.innerText = 'Oops! forgot to put a place?';
+			return;
+		} else if (this.form.timeInput.value === '') {
+			this.form.timeInput.focus();
+			ev.preventDefault();
+			this.help.innerText = 'Oops! forgot to put a date?';
+			return;
+		} {
+			ev.preventDefault();
+			this.header.refresh([this.form.placeInput.value]);
+      console.log(this.form.timeInput.value);
+      
+			APP.createResultCard({
+				position: this._place,
+				time: this.form.timeInput.value,
+				image: this.header.currentImageUrl
+			});
+      this.form.placeInput.value = '';
+      this.form.timeInput.value  = '';
+			this.help.innerText = '';
+		}
   }
 
   _createListItem(item, matchName, matchCapital, inputValue) {

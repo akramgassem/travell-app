@@ -4,6 +4,7 @@ import '../styles/header.scss';
 import '../styles/main.scss';
 import '../styles/form.scss';
 import '../styles/footer.scss';
+import '../styles/results.scss';
 import imageBg from '../images/travel_app_bg.png';
 import logoImg from '../images/travel_app_logo.png';
 import clearDay from '../images/weather-icons/clear-day.png';
@@ -18,50 +19,65 @@ import snow from '../images/weather-icons/snow.png';
 import wind from '../images/weather-icons/wind.png';
 
 import {createElement, randomInt, logo, ID, convertSI, weatherIcon} from './utils';
-import { postData, getData, getCountries, getImagesByQuery, cachedImages, refreshImages, getGeoNames, weather } from './services/http-client';
+import {
+	postData,
+	getData,
+	getCountries,
+	getImagesByQuery,
+	cachedImages,
+	refreshImages,
+	getGeoNames,
+	weather,
+	addData
+} from './services/http-client';
 import MessagePopUp from './services/message-pop-up';
+import { createResultCard } from './result-card';
 import HeaderScreen from './header-screen';
 import SearchBar from './search-bar';
 import UserLoaction from './geo-location';
-import SelectedPlaces from './selected-places';
 
 
 import moment from '../../../node_modules/moment';
 
 export {
-    // Assets weather icons
-    clearDay, clearNight, cloudy, 
-    fog, partlyCloudyDay, partlyCloudyNight, 
-    rain, sleet, snow, wind,
-    // logo and BG images
-    imageBg, 
-    logoImg,
-
-    // Utils
-    randomInt,
-    createElement,
-    logo,
-    ID,
-    convertSI,
-    moment,
-    weatherIcon,
-
-    // http calls & services
-    MessagePopUp,
-    postData,
-    getData,
-    getImagesByQuery,
-    cachedImages,
-    refreshImages,
-    getCountries,
-    getGeoNames,
-    weather,
-    
-    // Classes UI and forms
-    HeaderScreen,
-    SearchBar,
-    UserLoaction,
-    SelectedPlaces
+	// Assets weather icons
+	clearDay,
+	clearNight,
+	cloudy,
+	fog,
+	partlyCloudyDay,
+	partlyCloudyNight,
+	rain,
+	sleet,
+	snow,
+	wind,
+	// logo and BG images
+	imageBg,
+	logoImg,
+	// Utils
+	randomInt,
+	createElement,
+	logo,
+	ID,
+	convertSI,
+	moment,
+	weatherIcon,
+	// http calls & services
+	MessagePopUp,
+	postData,
+	getData,
+	addData,
+	getImagesByQuery,
+	cachedImages,
+	refreshImages,
+	getCountries,
+	getGeoNames,
+	weather,
+	// Classes UI and forms
+	HeaderScreen,
+	SearchBar,
+	UserLoaction,
+	createResultCard
 };
 
 
@@ -75,6 +91,8 @@ const handleLoad = async (ev)=> {
     // init header Bg and Form
     const header = HeaderScreen.init();
     SearchBar.init(header);
+
+    
     
     //Request user geoposition 
     // const userPos = UserLocation.get();
