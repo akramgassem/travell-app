@@ -18,7 +18,15 @@ import sleet from '../images/weather-icons/sleet.png';
 import snow from '../images/weather-icons/snow.png';
 import wind from '../images/weather-icons/wind.png';
 
-import {createElement, randomInt, logo, ID, convertSI, weatherIcon} from './utils';
+import {
+	createElement,
+	randomInt,
+	logo,
+	ID,
+	convertSI,
+	weatherIcon,
+	srollTo
+} from './utils';
 import {
 	postData,
 	getData,
@@ -60,6 +68,7 @@ export {
 	randomInt,
 	createElement,
 	logo,
+	srollTo,
 	ID,
 	convertSI,
 	moment,

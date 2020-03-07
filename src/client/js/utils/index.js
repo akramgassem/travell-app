@@ -34,6 +34,19 @@ const convertSI = (F) => {
   return  Math.floor((F - 32) * 5/9 );
 };
 
+const srollTo = (posTop) => {
+    let timer = setTimeout(() => {
+			window.scrollTo({
+				top: posTop - 250,
+				left: 0,
+				behavior: 'smooth'
+      });
+      window.clearTimeout(timer);
+    }, 300);
+    return timer;
+	};
+  
+
 const weatherIcon = (str) => {
   const icons = {
     'clear-day': APP.clearDay,
@@ -53,11 +66,11 @@ const weatherIcon = (str) => {
 
 
 module.exports = {
-  createElement,
-  randomInt,
-  logo,
-  ID,
-  convertSI,
-  setTimeout,
-  weatherIcon
+	createElement,
+	randomInt,
+	logo,
+	ID,
+	convertSI,
+	weatherIcon,
+	srollTo
 };

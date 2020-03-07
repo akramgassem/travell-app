@@ -355,6 +355,7 @@ const createWeatherCard = configs => {
 
 	// select card by id
 	const cardElement = document.getElementById(card.id);
+	APP.srollTo(cardElement.offsetTop);
 
 	const handleClick = ev => {
 		// handle input and add btns
@@ -403,8 +404,14 @@ const createWeatherCard = configs => {
 		// expand lists
 		if (ev.target.id === `expand_${card.id}`) {
 			ev.preventDefault();
-			const listsCard = document.getElementById(`card_${card.id}`);
+			let listsCard = document.getElementById(`card_${card.id}`);
+			let expand = listsCard.getAttribute('data-expand') === 'true';
+			listsCard.setAttribute('data-expand', !expand);
 			listsCard.classList.toggle('expand');
+			
+			if (!expand){
+				APP.srollTo(listsCard.offsetTop);
+			}
 		}
 	};
 
