@@ -16,7 +16,7 @@ module.exports = {
 	},
 	output: {
 		libraryTarget: 'var',
-		library: 'Client'
+		library: 'APP'
 	},
 	module: {
 		rules: [
