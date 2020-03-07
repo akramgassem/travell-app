@@ -152,6 +152,32 @@ const parseTime = (T) => {
 };
 
 
+const updateChanges = card => {
+	const changeBtn = document.getElementById('changes');
+	const cancelBtn = document.getElementById('cancel');
+	changeBtn.disabled = false;
+	cancelBtn.disabled = false;
+
+	const handleChange = async ev => {
+		if(ev.target.id === "changes") {
+			ev.preventDefault();
+			changeBtn.classList.add('is-loading');
+			const upd = await APP.updateCardItem(card);
+			if(upd){
+				changeBtn.classList.remove('is-loading');
+				changeBtn.disabled = true;
+				cancelBtn.disabled = true;
+			}
+		}
+
+		if(ev.target.id === "cancel") {
+			ev.preventDefault();
+		}
+	};
+
+	document.addEventListener('click', handleChange);
+};
+
 const createEntryItem = (list, input = null) => {
 	const entry = input === null ? list : {
 		id: randomId(),
@@ -215,9 +241,9 @@ const createWeatherCard = configs => {
         <div class="card-result__actions-bar">
           <div class="start">
             <div class="tags has-addons">
-              <span id="number${
-								card.id
-							}" class="tag is-warning">${updateNumber(card)}</span>
+              <span id="number${card.id}" class="tag is-warning">${updateNumber(
+		card
+	)}</span>
             </div>
             <a id="expand_${
 							card.id
@@ -250,9 +276,7 @@ const createWeatherCard = configs => {
 												);
 											})()}
 											<div class=" summary has-text-centered has-text-white">
-											<p > ${
-												card.dailyWeather.summary !== undefined	? card.dailyWeather.summary	: ''
-											} 
+											<p > ${card.dailyWeather.summary !== undefined	? card.dailyWeather.summary	: ''} 
 											 ${APP.moment(
 													new Date(card.dailyWeather.time * 1000),
 													'YYYYMMDD'
@@ -270,7 +294,7 @@ const createWeatherCard = configs => {
             </div>
         </div>
 
-        <div class="card-result__lists expand" id="card_${card.id}">
+				<div class="card-result__lists expand" id="card_${card.id}">
           ${lists
 						.map(item => {
 							return `<div class="lists_item" id="${item.id}">
@@ -311,14 +335,11 @@ const createWeatherCard = configs => {
 	element.classList.add('card-wrapper');
 	element.innerHTML = markup;
 
-
-	
-
 	// append to his parent
 	const parent = document.getElementById('results');
 	parent.append(element);
 
-	// create entries if there is an entries
+	// create entries if entries exits
 	lists.forEach(item => {
 		const ul = document.getElementById(`${item.type}${item.id}`);
 		if (card.entries.length !== 0) {
@@ -348,6 +369,7 @@ const createWeatherCard = configs => {
 					const entry = createEntryItem(list, input);
 					card.entries.push(entry);
 					updateNumber(card);
+					updateChanges(card);
 					console.log(card);
 					input.value = '';
 				} else {
@@ -363,6 +385,7 @@ const createWeatherCard = configs => {
 			listParent.removeChild(ev.target.parentNode);
 			card.entries = card.entries.filter(entry => entry.id !== entry_id);
 			updateNumber(card);
+			updateChanges(card);
 			console.log(card);
 		}
 
@@ -373,6 +396,7 @@ const createWeatherCard = configs => {
 			const el = document.getElementById(id);
 			if (el !== null) {
 				el.parentNode.removeChild(el);
+				 APP.deleteCardItem({id});
 			}
 		}
 
@@ -396,43 +420,22 @@ const createResultCard = async data => {
 		time: APP.moment(data.time)
 	});
 
-	const user_entries = [
-		{
-			id: '_dpq9wu2vf',
-			type: 'lodging',
-			value: 'New lodging element!'
-		},
-		{
-			id: '_dkadr177t',
-			type: 'packing',
-			value: 'packing list'
-		},
-		{
-			id: '_4ar6e337f',
-			type: 'todo',
-			value: 'task one!'
-		},
-		{
-			id: '_bvjne0bvp',
-			type: 'todo',
-			value: 'task two!'
-		}
-	];
 
 	const configs = {
 		id: randomId(),
 		country: data.position.name,
 		image: data.image,
-		entries: user_entries,
+		entries: [],
 		time: data.time,
 		dailyWeather: weather.daily !== undefined ? weather.daily.data[0] : null
 	};
 
 	createWeatherCard(configs);
-
+	const addCard = await APP.addData(configs);
 	
 };
 
 module.exports = {
-	createResultCard
+	createResultCard,
+	createWeatherCard
 };

@@ -28,10 +28,12 @@ import {
 	refreshImages,
 	getGeoNames,
 	weather,
-	addData
+	addData,
+	deleteCardItem,
+	updateCardItem
 } from './services/http-client';
 import MessagePopUp from './services/message-pop-up';
-import { createResultCard } from './result-card';
+import { createResultCard, createWeatherCard } from './result-card';
 import HeaderScreen from './header-screen';
 import SearchBar from './search-bar';
 import UserLoaction from './geo-location';
@@ -67,6 +69,8 @@ export {
 	postData,
 	getData,
 	addData,
+	updateCardItem,
+	deleteCardItem,
 	getImagesByQuery,
 	cachedImages,
 	refreshImages,
@@ -77,7 +81,8 @@ export {
 	HeaderScreen,
 	SearchBar,
 	UserLoaction,
-	createResultCard
+	createResultCard,
+	createWeatherCard
 };
 
 
@@ -86,11 +91,15 @@ const handleLoad = async (ev)=> {
     logo();
 
     // Get user data from server
-    const get = await APP.getData('/all/');
+		const get = await APP.getData('/all/');
+		get.data.forEach(element => {
+			createWeatherCard(element);
+		});
     
     // init header Bg and Form
     const header = HeaderScreen.init();
-    SearchBar.init(header);
+		SearchBar.init(header);
+		
 
     
     

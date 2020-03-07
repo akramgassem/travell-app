@@ -1,153 +1,113 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8" />
-    <title>Travel app</title>
-    <script
-      src="https://kit.fontawesome.com/00118e4b7c.js"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"
-    />
-    <script
-      defer
-      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
-    ></script>
-  </head>
 
-  <body class="main-grid">
-    <header>
-      <nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="#">
-      <img class="logo" src="" width="auto" height="28">
-    </a>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel app</title>
+  <script src="https://kit.fontawesome.com/00118e4b7c.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" />
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
 
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      
+<body class="main-grid">
+  <header>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <img class="logo" src="" width="auto" height="28">
+        </a>
       </div>
-    </div>
 
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-primary">
-            <strong>Sign up</strong>
-          </a>
-          <a class="button is-light">
-            Log in
-          </a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <div id="user-location" class="is-hidden"></div>
+    <div class="pixa-image-container">
+
+      <div class="logo-container">
+        <div class="logo-relative">
+          <img class="logo" src="" alt="travel-app logo">
         </div>
       </div>
-    </div>
-  </div>
-</nav>
-    </header>
 
-    <main id="main">
-      <div id="user-location" class="is-hidden"></div>
-      <div class="pixa-image-container">
-        
-        <div class="logo-container">
-          <div class="logo-relative">
-            <img class="logo" src="" alt="travel-app logo">
+      <form id="searchBarForm">
+        <div class="form-container">
+          <div class="help-container">
+            <p id="place-help" class="help has-text-centered is-warning"></p>
           </div>
-        </div>
-
-        <form id="searchBarForm">
-          <div class="form-container">
-            <div class="help-container">
-              <p id="place-help" class="help has-text-centered is-warning"></p>
-            </div>
-            <div class="form-relative">
-              <div class="field has-addons">
-                <div class="control">
-                  <input
-                    name="placeInput"
-                    class="input is-rounded is-medium"
-                    type="text"
-                    value=""
-                    autocomplete="off"
-                    placeholder="Where ?"
-                  />
-                </div>
-                <div class="control">
-                  <input
-                    name="timeInput"
-                    class="input is-rounded is-medium"
-                    type="date"
-                    value=""
-                    autocomplete="off"
-                    placeholder="When ?"
-                  />
-                </div>
-                <div class="control">
-                  <button
-                    name="submitButton"
-                    type="submit"
-                    class="button is-rounded is-medium is-warning"
-                  >
-                    <span class="icon has-text-dark is-medium ">
-                      <i class="fas fa-lg fa-map-marker-alt"></i>
-                    </span>
-                  </button>
-                </div>
+          <div class="form-relative">
+            <div class="field has-addons">
+              <div class="control">
+                <input name="placeInput" class="input is-rounded is-medium" type="text" value="" autocomplete="off"
+                  placeholder="Where ?" />
+              </div>
+              <div class="control">
+                <input name="timeInput" class="input is-rounded is-medium" type="date" value="" autocomplete="off"
+                  placeholder="When ?" />
+              </div>
+              <div class="control">
+                <button name="submitButton" type="submit" class="button is-rounded is-medium is-warning">
+                  <span class="icon has-text-dark is-medium ">
+                    <i class="fas fa-lg fa-map-marker-alt"></i>
+                  </span>
+                </button>
               </div>
             </div>
           </div>
-        </form>
-        
-        <div class="overlay"></div>
-
-        <button id="reload"  class="button reload is-medium is-warning is-rounded">
-          <span id="reload" class="icon is-small is-medium">
-            <i id="reload" class="fas fa-lg fa-camera-retro"></i>
-          </span>
-        </button>
-
-
-        <div id="tags" class="tags"></div>
-        <div  class="links">
-          <a id="link" class="is-link" href="#" target="_blank">
-            <div >Pixabay-user: <span id="user"></span></div>
-            <div >Views: <span id="views"></span></div>
-          </a>
         </div>
+      </form>
+
+      <div class="overlay"></div>
+
+      <button id="reload" class="button reload is-medium is-warning is-rounded">
+        <span id="reload" class="icon is-small is-medium">
+          <i id="reload" class="fas fa-lg fa-camera-retro"></i>
+        </span>
+      </button>
+
+
+      <div id="tags" class="tags"></div>
+      <div class="links">
+        <a id="link" class="is-link" href="#" target="_blank">
+          <div>Pixabay-user: <span id="user"></span></div>
+          <div>Views: <span id="views"></span></div>
+        </a>
       </div>
+    </div>
 
-      <section  class="section">
-        <div id="results" class="results">
-
+    <section class="section">
+        <div class="action-bar results">
+          <div class="buttons">
+            <button type="submit" class="is-primary is-small button is-rounded" id="changes"  disabled>Save changes</button>
+            <button  type="submit" class="button is-rounded is-small" id="cancel"  disabled>Cancel</button>
+          </div>
         </div>
-      </section>
-    </main>
+      <div id="results" class="results">
 
-    <footer class="footer">
-      <div class="content has-text-centered">
-        <p>Developped by Akram Gassem</p>
       </div>
-    </footer>
-    <script>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>Developped by Akram Gassem</p>
+    </div>
+  </footer>
+  <script>
       // Check that service workers are supported
-      /**
-         if ('serviceWorker' in navigator) {
-             // Use the window load event to keep the page load performant
-             window.addEventListener('load', () => {
-                 navigator.serviceWorker.register('/service-worker.js');
-                });
-            }
-        */
-    </script>
-    <div class="notifications"></div>
-  </body>
+    /**
+       if ('serviceWorker' in navigator) {
+           // Use the window load event to keep the page load performant
+           window.addEventListener('load', () => {
+               navigator.serviceWorker.register('/service-worker.js');
+              });
+          }
+      */
+  </script>
+  <div class="notifications"></div>
+</body>
+
 </html>

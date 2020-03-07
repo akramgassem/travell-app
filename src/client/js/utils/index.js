@@ -27,7 +27,7 @@ const ID = () => {
 
 /**
  * 
- * @param {number} K SI Units - Temperature
+ * @param {number} C SI Units - Temperature
  * @returns C and F units
  */
 const convertSI = (F) => {

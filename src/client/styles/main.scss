@@ -67,13 +67,12 @@ $font-special: "Patua One";
 .logo-container {
   position: absolute;
   top: 33%;
-  left: 50%;
   max-width: 280px;
   min-width: 250px;
 
   .logo-relative {
-    position: relative; 
-    left: -50%;
+    position: relative;
+    left: 10%;
   }
 }
 

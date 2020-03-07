@@ -110,10 +110,24 @@ const addData = async (data) => {
   return post;
 };
 
+const deleteCardItem = async data => {
+  const del = await postData('/delete/', data);
+  APP.MessagePopUp.show(del.message, 'success');
+	return del;
+};
+
+const updateCardItem = async data => {
+	const update = await postData('/update/', data);
+	APP.MessagePopUp.show(update.message, 'success');
+	return update;
+};
+
 module.exports = {
     getData,
     postData,
     addData,
+    deleteCardItem,
+    updateCardItem,
     getCountries,
     getImagesByQuery,
     cachedImages,
