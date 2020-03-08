@@ -29,7 +29,6 @@ app.use('/api/', router);
 
 // default uri
 app.get('/', (req, res) => {
-  console.log('hello')
     res.sendFile('dist/index.html');
 });
 

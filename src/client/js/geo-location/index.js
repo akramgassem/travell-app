@@ -32,7 +32,6 @@ export default class UserLocation {
       lon: position.coords.longitude
     });
 
-    console.log(Weather);
     this._updateUi(data);
   }
 

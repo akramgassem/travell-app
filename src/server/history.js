@@ -30,10 +30,15 @@ const postData = (req, res) => {
 
 const updateDataItem = (req, res) => {
 	if (req.body !== '') {
-		const item = req.body;
-		const result = data.filter(el => el.id !== item.id);
-    data = result;
-    data.push(item);
+		const items = req.body;
+		let result = [];
+		items.forEach(item => {
+			result = data.filter(el => el.id !== item.id);
+			data = result;
+			data.push(item);
+		});
+		data = result;
+
 		res.send({
 			data,
 			message: 'Item Updated with success!'
@@ -49,7 +54,7 @@ const updateDataItem = (req, res) => {
 const deleteDataItem = (req, res) => {
 	if (req.body !== '') {
 		const item = req.body;
-		const result = data.filter(el => el.id !== item.id);
+		const	result = data.filter(el => el.id !== item.id);
 		data = result;
 		res.send({
 			data,

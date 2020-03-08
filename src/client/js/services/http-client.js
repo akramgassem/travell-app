@@ -70,12 +70,14 @@ const weather = async ({lat, lon, time}) => {
 		lat,
 		lon,
 		time: time.format()
-	});
-  return JSON.parse(weather.data);
+  });
+  if (weather.message.errno !== 'ENOTFOUND') {
+    return JSON.parse(weather.data);
+  }
 };
 
 
-const getImagesByQuery = async (query = ["paris"]) => {
+const getImagesByQuery = async (query = ['paris']) => {
   const imgs = await postData("/pixa/", {
     query,
     categorie: "places"
@@ -101,9 +103,6 @@ const cachedImages = async (query) => {
 };
 
 
-const refreshImages = async (query) => {
-  return await getImagesByQuery(query);
-};
 
 const addData = async (data) => {
   const post = await postData('/add/', data);
@@ -131,7 +130,6 @@ module.exports = {
     getCountries,
     getImagesByQuery,
     cachedImages,
-    refreshImages,
     getGeoNames,
     weather
 };

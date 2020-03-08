@@ -1,6 +1,6 @@
 
 export default class HeaderScreen {
-  constructor(query = ['paris']) {
+  constructor(query) {
     this.images = null;
     this.element = null;
     this.tags = null;
@@ -34,22 +34,24 @@ export default class HeaderScreen {
   }
 
   async refresh(query) {
-    this.images = await APP.refreshImages(query);
+    this.images = await APP.getImagesByQuery(query);
+    this.currentImageUrl = this.images[APP.randomInt(this.images.length)].largeImageURL;
     window.clearTimeout(this.timer);
-    this._populateUi();
+      this._populateUi();
   }
     
 
   _populateUi() {
-    this._updateFields(APP.randomInt(this.images.length));
-    this.timer = setInterval(() => {
+    if(this.images !== null) {
       this._updateFields(APP.randomInt(this.images.length));
-    }, 50000);
+      this.timer = setInterval(() => {
+        this._updateFields(APP.randomInt(this.images.length));
+      }, 50000);
+    }
   }
 
   _updateFields(int) {
     const image = this.images[int];
-    this.currentImageUrl = image.largeImageURL;
     this.element.style.backgroundImage = `url(${image.largeImageURL})`;
     this.tags.innerText = image.tags;
     this.link.href = image.pageURL;

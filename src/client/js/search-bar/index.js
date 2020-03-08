@@ -133,7 +133,6 @@ export default class SearchBar {
 		} {
 			ev.preventDefault();
 			this.header.refresh([this.form.placeInput.value]);
-      console.log(this.form.timeInput.value);
       
 			APP.createResultCard({
 				position: this._place,

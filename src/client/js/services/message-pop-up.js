@@ -46,7 +46,7 @@ export default class MessagePopUp {
   _deleteElement(el, delay, condition) {
     this._setTimeout(delay, () => {
       _counter--;
-      el.classList.toggle("hide");
+      el.classList.add("hide");
 
       if (condition) {
         this._setTimeout(600, () => {

@@ -151,31 +151,37 @@ const parseTime = (T) => {
 	return APP.moment(new Date(T), 'YYYYMMDD');
 };
 
+let changes = [];
+const handleChange = async ev => {
+	const changeBtn = document.getElementById('changes');
+	const cancelBtn = document.getElementById('cancel');
+	if(ev.target.id === "changes" && changes.length > 0) {
+		ev.preventDefault();
+		changeBtn.classList.add('is-loading');
+		
+		const upd = await APP.updateCardItem(changes);
+		if(upd){
+			changeBtn.classList.remove('is-loading');
+			changeBtn.disabled = true;
+			cancelBtn.disabled = true;
+			changes = [];
+		}
+	}
+
+	if(ev.target.id === "cancel") {
+		ev.preventDefault();
+	}
+};
+
+document.addEventListener('click', handleChange);
+
 
 const updateChanges = card => {
 	const changeBtn = document.getElementById('changes');
 	const cancelBtn = document.getElementById('cancel');
 	changeBtn.disabled = false;
 	cancelBtn.disabled = false;
-
-	const handleChange = async ev => {
-		if(ev.target.id === "changes") {
-			ev.preventDefault();
-			changeBtn.classList.add('is-loading');
-			const upd = await APP.updateCardItem(card);
-			if(upd){
-				changeBtn.classList.remove('is-loading');
-				changeBtn.disabled = true;
-				cancelBtn.disabled = true;
-			}
-		}
-
-		if(ev.target.id === "cancel") {
-			ev.preventDefault();
-		}
-	};
-
-	document.addEventListener('click', handleChange);
+	changes.push(card);
 };
 
 const createEntryItem = (list, input = null) => {
@@ -201,11 +207,13 @@ const createEntryItem = (list, input = null) => {
 	}
 };
 
-const createWeatherCard = configs => {
+const createWeatherCard = async (configs) => {
+	const imagefromCache = await APP.cachedImages();
 	let card = {
 		id: configs.id,
 		country: configs.country,
-		image: configs.image,
+		image:
+			configs.image !== null ? configs.image : imagefromCache[APP.randomInt(imagefromCache.length)].largeImageURL,
 		dailyWeather: configs.dailyWeather,
 		time: configs.time,
 		entries: configs.entries
@@ -339,6 +347,8 @@ const createWeatherCard = configs => {
 	const parent = document.getElementById('results');
 	parent.append(element);
 
+	
+
 	// create entries if entries exits
 	lists.forEach(item => {
 		const ul = document.getElementById(`${item.type}${item.id}`);
@@ -371,7 +381,6 @@ const createWeatherCard = configs => {
 					card.entries.push(entry);
 					updateNumber(card);
 					updateChanges(card);
-					console.log(card);
 					input.value = '';
 				} else {
 					input.focus();
@@ -387,13 +396,11 @@ const createWeatherCard = configs => {
 			card.entries = card.entries.filter(entry => entry.id !== entry_id);
 			updateNumber(card);
 			updateChanges(card);
-			console.log(card);
 		}
 
 		// delete card element
 		if (/remove_/.test(ev.target.id)) {
 			const id = ev.target.id.replace('remove', '');
-			console.log(id);
 			const el = document.getElementById(id);
 			if (el !== null) {
 				el.parentNode.removeChild(el);
@@ -428,6 +435,7 @@ const createResultCard = async data => {
 	});
 
 
+	
 	const configs = {
 		id: randomId(),
 		country: data.position.name,

@@ -3,15 +3,16 @@ require("dotenv").config();
 const request = require("request");
 
 const getPIXA = (req, res) => {
-  console.log(req.body);
 
     const {query, categorie } = req.body;
+
+    let q = query.length !== undefined ? query : ['places'];
   
   const API_KEY = process.env.PIXA_KEY;
   const URL =
 		'https://pixabay.com/api/?key=' +
 		API_KEY +
-		'&q=' + encodeURIComponent(query.join('+')) +
+		'&q=' + encodeURIComponent(q.join('+')) +
     `&categorie=${categorie}` +
     `&page=${3}` +
     `&image_type=photo` +
