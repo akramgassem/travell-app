@@ -1,11 +1,26 @@
-const randomId = () => {
-	return (
-		'_' +
-		Math.random()
-			.toString(36)
-			.substr(2, 9)
-	);
+let changes = [];
+const handleChange = async ev => {
+	const changeBtn = document.getElementById('changes');
+	const cancelBtn = document.getElementById('cancel');
+	if (ev.target.id === 'changes' && changes.length > 0) {
+		ev.preventDefault();
+		changeBtn.classList.add('is-loading');
+
+		const upd = await APP.updateCardItem(changes);
+		if (upd) {
+			changeBtn.classList.remove('is-loading');
+			changeBtn.disabled = true;
+			cancelBtn.disabled = true;
+			changes = [];
+		}
+	}
+
+	if (ev.target.id === 'cancel') {
+		ev.preventDefault();
+	}
 };
+
+document.addEventListener('click', handleChange);
 
 const updateNumber = (card) => {
 			const num = document.getElementById(`number${card.id}`);
@@ -115,7 +130,9 @@ const weatherRange = (current, min, max) => {
     height: auto;
     background-color: #eee;
     left: 30px;
-    top: -7px;
+    top: ${
+			Math.abs(maxTemp - minTemp) <= 6 && minTemp === degree ? `5px` : `-7px`
+		};
     `;
 
 		const label = document.createElement('div');
@@ -151,29 +168,7 @@ const parseTime = (T) => {
 	return APP.moment(new Date(T), 'YYYYMMDD');
 };
 
-let changes = [];
-const handleChange = async ev => {
-	const changeBtn = document.getElementById('changes');
-	const cancelBtn = document.getElementById('cancel');
-	if(ev.target.id === "changes" && changes.length > 0) {
-		ev.preventDefault();
-		changeBtn.classList.add('is-loading');
-		
-		const upd = await APP.updateCardItem(changes);
-		if(upd){
-			changeBtn.classList.remove('is-loading');
-			changeBtn.disabled = true;
-			cancelBtn.disabled = true;
-			changes = [];
-		}
-	}
 
-	if(ev.target.id === "cancel") {
-		ev.preventDefault();
-	}
-};
-
-document.addEventListener('click', handleChange);
 
 
 const updateChanges = card => {
@@ -186,7 +181,7 @@ const updateChanges = card => {
 
 const createEntryItem = (list, input = null) => {
 	const entry = input === null ? list : {
-		id: randomId(),
+		id: APP.ID(),
 		type: list.type,
 		value: input.value
 	};
@@ -221,21 +216,21 @@ const createWeatherCard = async (configs) => {
 
 	let lists = [
 			{
-				id: randomId(),
+				id: APP.ID(),
 				type: 'packing',
 				name: 'packing list',
 				placeholder: 'First Pack!'
 			},
 			{
-				id: randomId(),
+				id: APP.ID(),
 				type: 'todo',
-				name: 'todo list',
+				name: 'add notes',
 				placeholder: 'First Task!'
 			},
 			{
-				id: randomId(),
+				id: APP.ID(),
 				type: 'lodging',
-				name: 'lodging list',
+				name: 'lodging Infos',
 				placeholder: 'Visit this hotel!'
 			}
 		];
@@ -437,7 +432,7 @@ const createResultCard = async data => {
 
 	
 	const configs = {
-		id: randomId(),
+		id: APP.ID(),
 		country: data.position.name,
 		image: data.image,
 		entries: [],
