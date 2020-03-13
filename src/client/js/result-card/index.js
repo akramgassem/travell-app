@@ -22,6 +22,14 @@ const handleChange = async ev => {
 
 document.addEventListener('click', handleChange);
 
+const updateChanges = card => {
+	const changeBtn = document.getElementById('changes');
+	const cancelBtn = document.getElementById('cancel');
+	changeBtn.disabled = false;
+	cancelBtn.disabled = false;
+	changes.push(card);
+};
+
 const updateNumber = (card) => {
 			const num = document.getElementById(`number${card.id}`);
 			if (num) {
@@ -169,16 +177,6 @@ const parseTime = (T) => {
 };
 
 
-
-
-const updateChanges = card => {
-	const changeBtn = document.getElementById('changes');
-	const cancelBtn = document.getElementById('cancel');
-	changeBtn.disabled = false;
-	cancelBtn.disabled = false;
-	changes.push(card);
-};
-
 const createEntryItem = (list, input = null) => {
 	const entry = input === null ? list : {
 		id: APP.ID(),
@@ -297,7 +295,7 @@ const createWeatherCard = async (configs) => {
             </div>
         </div>
 
-				<div class="card-result__lists expand" id="card_${card.id}">
+				<div class="card-result__lists hided" data-expanded="false" id="card_${card.id}">
           ${lists
 						.map(item => {
 							return `<div class="lists_item" id="${item.id}">
@@ -407,11 +405,21 @@ const createWeatherCard = async (configs) => {
 		if (ev.target.id === `expand_${card.id}`) {
 			ev.preventDefault();
 			let listsCard = document.getElementById(`card_${card.id}`);
-			let expand = listsCard.getAttribute('data-expand') === 'true';
-			listsCard.setAttribute('data-expand', !expand);
-			listsCard.classList.toggle('expand');
+			let expanded = listsCard.getAttribute('data-expanded') === 'true';
+			listsCard.setAttribute('data-expanded', !expanded);
+			listsCard.classList.toggle('hided');
 			
-			if (!expand){
+			// select other cards and collapse them
+			const othersCards = document.querySelectorAll('.card-result__lists');
+			[...othersCards]
+				.filter(el => el.id !== `card_${card.id}`)
+				.filter(el => el.dataset.expanded === 'true')
+				.forEach(el => {
+					el.classList.add('hided');
+					el.setAttribute('data-expanded', 'false');
+				});
+			
+			if (!expanded){
 				APP.srollTo(listsCard.offsetTop);
 			}
 		}
@@ -428,8 +436,6 @@ const createResultCard = async data => {
 		lon: data.position.latlng[0],
 		time: APP.moment(data.time)
 	});
-
-
 	
 	const configs = {
 		id: APP.ID(),
