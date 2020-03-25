@@ -1,53 +1,56 @@
+/* eslint-disable no-undef */
 let changes = [];
 const handleChange = async ev => {
-	const changeBtn = document.getElementById('changes');
-	const cancelBtn = document.getElementById('cancel');
-	if (ev.target.id === 'changes' && changes.length > 0) {
-		ev.preventDefault();
-		changeBtn.classList.add('is-loading');
+  const changeBtn = document.getElementById('changes');
+  const cancelBtn = document.getElementById('cancel');
+  if (ev.target.id === 'changes' && changes.length > 0) {
+    ev.preventDefault();
+    changeBtn.classList.add('is-loading');
 
-		const upd = await APP.updateCardItem(changes);
-		if (upd) {
-			changeBtn.classList.remove('is-loading');
-			changeBtn.disabled = true;
-			cancelBtn.disabled = true;
-			changes = [];
-		}
-	}
+    const upd = await APP.updateCardItem(changes);
+    if (upd) {
+      changeBtn.classList.remove('is-loading');
+      changeBtn.disabled = true;
+      cancelBtn.disabled = true;
+      changes = [];
+    }
+  }
 
-	if (ev.target.id === 'cancel') {
-		ev.preventDefault();
-	}
+  if (ev.target.id === 'cancel') {
+    ev.preventDefault();
+  }
 };
 
 document.addEventListener('click', handleChange);
 
 const updateChanges = card => {
-	const changeBtn = document.getElementById('changes');
-	const cancelBtn = document.getElementById('cancel');
-	changeBtn.disabled = false;
-	cancelBtn.disabled = false;
-	changes.push(card);
+  const changeBtn = document.getElementById('changes');
+  const cancelBtn = document.getElementById('cancel');
+  changeBtn.disabled = false;
+  cancelBtn.disabled = false;
+  changes.push(card);
 };
 
-const updateNumber = (card) => {
-			const num = document.getElementById(`number${card.id}`);
-			if (num) {
-				const res = {};
-				card.entries.forEach(el => {
-					if (!res[el.type]) {
-						res[el.type] = 0;
-					}
-					++res[el.type];
-				});
-				const types = Object.keys(res);
-				num.innerText =
-					types.length === 0 ? 0 : `${types.map(type => {
-								return `${type}: ${res[type]}`;
-						  })}`;
-			}
-			return card.entries.length;
-		};
+const updateNumber = card => {
+  const num = document.getElementById(`number${card.id}`);
+  if (num) {
+    const res = {};
+    card.entries.forEach(el => {
+      if (!res[el.type]) {
+        res[el.type] = 0;
+      }
+      ++res[el.type];
+    });
+    const types = Object.keys(res);
+    num.innerText =
+      types.length === 0
+        ? 0
+        : `${types.map(type => {
+            return `${type}: ${res[type]}`;
+          })}`;
+  }
+  return card.entries.length;
+};
 
 /**
  *
@@ -56,36 +59,36 @@ const updateNumber = (card) => {
  * @param {number} max temperature max
  */
 const weatherRange = (current, min, max) => {
-	// range function
-	const range = (start, end, step) => {
-		if (start === end) return [start];
-		return [start, ...range(start + step, end, step)];
-	};
+  // range function
+  const range = (start, end, step) => {
+    if (start === end) return [start];
+    return [start, ...range(start + step, end, step)];
+  };
 
-	const zero = 20;
-	let minTemp = zero + min;
-	let maxTemp = zero + max;
-	if (minTemp % 2 !== 0) minTemp += 1;
-	if (maxTemp % 2 !== 0) maxTemp += 1;
+  const zero = 20;
+  let minTemp = zero + min;
+  let maxTemp = zero + max;
+  if (minTemp % 2 !== 0) minTemp += 1;
+  if (maxTemp % 2 !== 0) maxTemp += 1;
 
-	const width = 100;
-	const degrees = range(0, 70, 2);
-	// -20 to 50 degree
+  const width = 100;
+  const degrees = range(0, 70, 2);
+  // -20 to 50 degree
 
-	const wrapper = document.createElement('div');
+  const wrapper = document.createElement('div');
 
-	const container = document.createElement('div');
-	container.classList.add('weather-range');
-	container.style.cssText = `
+  const container = document.createElement('div');
+  container.classList.add('weather-range');
+  container.style.cssText = `
   position: relative;
   width: ${width * 2}px;
   height: ${width}px;
   margin: auto;
   `;
 
-	const currentLabel = document.createElement('div');
-	currentLabel.innerText = `${current}°C`;
-	currentLabel.style.cssText = `
+  const currentLabel = document.createElement('div');
+  currentLabel.innerText = `${current}°C`;
+  currentLabel.style.cssText = `
   position: absolute;
   top: ${width - 32}px;
   left: calc((200px - 90px) / 2);
@@ -96,14 +99,14 @@ const weatherRange = (current, min, max) => {
   text-align: center;
   `;
 
-	container.append(currentLabel);
+  container.append(currentLabel);
 
-	degrees.forEach(degree => {
-		const rot = Math.ceil((185 / degrees.length) * (degree / 2));
-		const colorSpec = degree * 2 + 240;
+  degrees.forEach(degree => {
+    const rot = Math.ceil((185 / degrees.length) * (degree / 2));
+    const colorSpec = degree * 2 + 240;
 
-		const deg = document.createElement('div');
-		deg.style.cssText = `
+    const deg = document.createElement('div');
+    deg.style.cssText = `
     position: absolute;
     top: ${width}px;
     height: auto;
@@ -112,16 +115,16 @@ const weatherRange = (current, min, max) => {
     transform: rotate(${rot}deg);
     `;
 
-		const line = document.createElement('div');
-		line.style.cssText = `
+    const line = document.createElement('div');
+    line.style.cssText = `
     height: 2px;
     border-radius: 3px;
     width: ${rot % 180 === 0 ? 40 : 20}px;
     background-color: hsl(${colorSpec}, 80%, 80%);
     `;
 
-		const dot = document.createElement('div');
-		dot.style.cssText = `
+    const dot = document.createElement('div');
+    dot.style.cssText = `
     position: absolute;
     left: 24px;
     top: -1px;
@@ -131,21 +134,21 @@ const weatherRange = (current, min, max) => {
     background-color: hsl(${colorSpec}, 80%, 60%);
     `;
 
-		const labelContainer = document.createElement('div');
-		labelContainer.style.cssText = `
+    const labelContainer = document.createElement('div');
+    labelContainer.style.cssText = `
     position: relative;
     border-radius: 10px;
     height: auto;
     background-color: #eee;
     left: 30px;
     top: ${
-			Math.abs(maxTemp - minTemp) <= 6 && minTemp === degree ? `5px` : `-7px`
-		};
+      Math.abs(maxTemp - minTemp) <= 6 && minTemp === degree ? '5px' : '-7px'
+    };
     `;
 
-		const label = document.createElement('div');
-		label.innerText = `${min}°`;
-		label.style.cssText = `
+    const label = document.createElement('div');
+    label.innerText = `${min}°`;
+    label.style.cssText = `
     position: absolute;
     font-weight: 300;
     font-size: 14px;
@@ -153,155 +156,169 @@ const weatherRange = (current, min, max) => {
     transform: rotate(${-rot}deg);
     color: hsl(${colorSpec}, 50%, 50%);
     `;
-		labelContainer.append(label);
+    labelContainer.append(label);
 
-		if (minTemp === degree) {
-			deg.append(dot);
-			deg.append(labelContainer);
-		}
-		if (maxTemp === degree) {
-			deg.append(dot);
-			label.innerText = `${max}°`;
-			deg.append(labelContainer);
-		}
-		deg.append(line);
-		container.append(deg);
-	});
+    if (minTemp === degree) {
+      deg.append(dot);
+      deg.append(labelContainer);
+    }
+    if (maxTemp === degree) {
+      deg.append(dot);
+      label.innerText = `${max}°`;
+      deg.append(labelContainer);
+    }
+    deg.append(line);
+    container.append(deg);
+  });
 
-	wrapper.append(container);
-	return wrapper.innerHTML;
+  wrapper.append(container);
+  return wrapper.innerHTML;
 };
 
-const parseTime = (T) => {
-	return APP.moment(new Date(T), 'YYYYMMDD');
+const parseTime = T => {
+  return APP.moment(new Date(T), 'YYYYMMDD');
 };
-
 
 const createEntryItem = (list, input = null) => {
-	const entry = input === null ? list : {
-		id: APP.ID(),
-		type: list.type,
-		value: input.value
-	};
+  const entry =
+    input === null
+      ? list
+      : {
+        id: APP.ID(),
+        type: list.type,
+        value: input.value
+      };
 
-	const itemList = document.createElement('li');
-	itemList.setAttribute('id', entry.id);
-	itemList.setAttribute('type', entry.type);
-	itemList.innerHTML = `
+  const itemList = document.createElement('li');
+  itemList.setAttribute('id', entry.id);
+  itemList.setAttribute('type', entry.type);
+  itemList.innerHTML = `
     <span class="text">${entry.value}</span>
     <span class="delete" id="del_${entry.id}"></span>
   `;
-	if (input === null) {
-		return itemList;
-	} else {
-		const entries = document.getElementById(`${list.type}${list.id}`);
-		entries.prepend(itemList);
-		return entry;
-	}
+  if (input === null) {
+    return itemList;
+  } else {
+    const entries = document.getElementById(`${list.type}${list.id}`);
+    entries.prepend(itemList);
+    return entry;
+  }
 };
 
-const createWeatherCard = async (configs) => {
-	const imagefromCache = await APP.cachedImages();
-	let card = {
-		id: configs.id,
-		country: configs.country,
-		image:
-			configs.image !== null ? configs.image : imagefromCache[APP.randomInt(imagefromCache.length)].largeImageURL,
-		dailyWeather: configs.dailyWeather,
-		time: configs.time,
-		entries: configs.entries
-	};
+const createWeatherCard = async configs => {
+  const imagefromCache = await APP.cachedImages();
+  const card = {
+    id: configs.id,
+    country: configs.country,
+    image:
+      configs.image !== null
+        ? configs.image
+        : imagefromCache[APP.randomInt(imagefromCache.length)].largeImageURL,
+    dailyWeather: configs.dailyWeather,
+    time: configs.time,
+    entries: configs.entries
+  };
 
-	let lists = [
-			{
-				id: APP.ID(),
-				type: 'packing',
-				name: 'packing list',
-				placeholder: 'First Pack!'
-			},
-			{
-				id: APP.ID(),
-				type: 'todo',
-				name: 'add notes',
-				placeholder: 'First Task!'
-			},
-			{
-				id: APP.ID(),
-				type: 'lodging',
-				name: 'lodging Infos',
-				placeholder: 'Visit this hotel!'
-			}
-		];
+  const lists = [
+    {
+      id: APP.ID(),
+      type: 'packing',
+      name: 'packing list',
+      placeholder: 'First Pack!'
+    },
+    {
+      id: APP.ID(),
+      type: 'todo',
+      name: 'add notes',
+      placeholder: 'First Task!'
+    },
+    {
+      id: APP.ID(),
+      type: 'lodging',
+      name: 'lodging Infos',
+      placeholder: 'Visit this hotel!'
+    }
+  ];
 
-	const markup = `
+  const markup = `
   <div class="card-result">
     <div class="card-result__header" style="background-image: url(${
-			card.image
-		})">
+      card.image
+    })">
       <div class="card__overlay"></div>
-        <div class="card-result__actions-bar">
-          <div class="start">
-            <div class="tags has-addons">
-              <span id="number${card.id}" class="tag is-warning">${updateNumber(
-		card
-	)}</span>
-            </div>
-            <a id="expand_${
-							card.id
-						}" class="button is-rounded is-small has-text-warning is-text">
-              <span id="expand_${card.id}">Expand</span>
-              <span id="expand_${card.id}"class="icon is-small">
-                <i class="fas fa-angle-down"></i>
-              </span>
-            </a>
+      <div class="card-result__actions-bar">
+        
+        <div class="start">
+          <div class="tags has-addons">
+            <span id="number${card.id}" class="tag is-warning">${updateNumber(
+    card
+  )}</span>
           </div>
-                    
-          <button id="remove${
-						card.id
-					}" class="delete is-rounded is-small is-black"></button>
+          <a id="expand_${
+            card.id
+          }" class="button is-rounded is-small has-text-warning is-text">
+            <span id="expand_${card.id}">Expand</span>
+            <span id="expand_${card.id}"class="icon is-small">
+              <i class="fas fa-angle-down"></i>
+            </span>
+          </a>
         </div>
-            <div class="card-result__weather-wrapper">
-                ${(() => {
-									if (card.dailyWeather !== null) {
-										return `<div class="weather-info">
-                      ${(() => {
-												const {
-													apparentTemperatureMin,
-													temperatureMin,
-													temperatureMax
-												} = card.dailyWeather;
-												return weatherRange(
-													Math.floor(apparentTemperatureMin),
-													Math.floor(temperatureMin),
-													Math.floor(temperatureMax)
-												);
-											})()}
-											<div class=" summary has-text-centered has-text-white">
-											<p > ${card.dailyWeather.summary !== undefined	? card.dailyWeather.summary	: ''} 
-											 ${APP.moment(
-													new Date(card.dailyWeather.time * 1000),
-													'YYYYMMDD'
-												).fromNow()}, in ${card.country}</p>
-											</div>
-                </div>`;
-									} else {
-										return `<div class="weather-info">
-															<div class=" summary has-text-centered has-text-warning">
-																No data weather for ${card.country}, ${parseTime(card.time).fromNow()}! 
-															</div>
-														</div>`;
-									}
-								})()}
+
+        <button id="remove${
+          card.id
+        }" class="delete is-rounded is-small is-black"></button>
+      </div>
+      
+      <div class="card-result__weather-wrapper">
+        ${(() => {
+          if (card.dailyWeather !== null) {
+            return `<div class="weather-info">
+              ${(() => {
+                const {
+                  apparentTemperatureMin,
+                  temperatureMin,
+                  temperatureMax
+                } = card.dailyWeather;
+                return weatherRange(
+                  Math.floor(apparentTemperatureMin),
+                  Math.floor(temperatureMin),
+                  Math.floor(temperatureMax)
+                );
+              })()}
+              <div class=" summary has-text-centered has-text-white">
+                <p>
+                  ${
+                    card.dailyWeather.summary !== undefined
+                      ? card.dailyWeather.summary
+                      : ''
+                  } 
+                  ${APP.moment(
+                    new Date(card.dailyWeather.time * 1000),
+                    'YYYYMMDD'
+                  ).fromNow()}, in ${card.country}
+                </p>
+              </div>
+              </div>`;
+          } else {
+            return `<div class="weather-info">
+<div class=" summary has-text-centered has-text-warning">
+No data weather for ${card.country}, ${parseTime(card.time).fromNow()}! 
+</div>
+</div>`;
+          }
+        })()}
             </div>
         </div>
 
-				<div class="card-result__lists hided" data-expanded="false" id="card_${card.id}">
+<div class="card-result__lists hided" data-expanded="false" id="card_${
+    card.id
+  }">
           ${lists
-						.map(item => {
-							return `<div class="lists_item" id="${item.id}">
+            .map(item => {
+              return `<div class="lists_item" id="${item.id}">
                   <p class="lists_title">${item.name}</p>
-									<ul class="entries" id="${item.type}${item.id}">
-									</ul>
+<ul class="entries" id="${item.type}${item.id}">
+</ul>
                   <div class="lists_input">
                     <div class="field has-addons">
                       <div class="control">
@@ -324,134 +341,130 @@ const createWeatherCard = async (configs) => {
                   </div>
                 </div>
               </div>`;
-						})
-						.join('')}
+            })
+            .join('')}
         </div>
       </div>
   `;
 
-	// create element wrapper
-	const element = document.createElement('div');
-	element.setAttribute('id', card.id);
-	element.classList.add('card-wrapper');
-	element.innerHTML = markup;
+  // create element wrapper
+  const element = document.createElement('div');
+  element.setAttribute('id', card.id);
+  element.classList.add('card-wrapper');
+  element.innerHTML = markup;
 
-	// append to his parent
-	const parent = document.getElementById('results');
-	parent.append(element);
+  // append to his parent
+  const parent = document.getElementById('results');
+  parent.append(element);
 
-	
+  // create entries if entries exits
+  lists.forEach(item => {
+    const ul = document.getElementById(`${item.type}${item.id}`);
+    if (card.entries.length !== 0) {
+      card.entries.map(entry => {
+        if (entry.type === item.type) {
+          const li = createEntryItem(entry);
+          ul.prepend(li);
+        }
+      });
+      updateNumber(card);
+    }
+  });
 
-	// create entries if entries exits
-	lists.forEach(item => {
-		const ul = document.getElementById(`${item.type}${item.id}`);
-		if (card.entries.length !== 0) {
-			card.entries.map(entry => {
-				if (entry.type === item.type) {
-					const li = createEntryItem(entry);
-					ul.prepend(li);
-				}
-			});
-			updateNumber(card);
-		}
-	});
+  // select card by id
+  const cardElement = document.getElementById(card.id);
+  APP.srollTo(cardElement.offsetTop);
 
-	// select card by id
-	const cardElement = document.getElementById(card.id);
-	APP.srollTo(cardElement.offsetTop);
+  const handleClick = ev => {
+    // handle input and add btns
+    if (/input_/.test(ev.target.id) || /btn_/.test(ev.target.id)) {
+      const id = ev.target.id.replace('btn', '');
+      const list = lists.filter(el => el.id === id)[0];
+      const input = document.getElementById(`input${id}`);
 
-	const handleClick = ev => {
-		// handle input and add btns
-		if (/input_/.test(ev.target.id) || /btn_/.test(ev.target.id)) {
-			const id = ev.target.id.replace('btn', '');
-			const list = lists.filter(el => el.id === id)[0];
-			const input = document.getElementById(`input${id}`);
+      // create entry object
+      if (input !== null) {
+        if (input.value !== '' && ev.target.id === `btn${id}`) {
+          const entry = createEntryItem(list, input);
+          card.entries.push(entry);
+          updateNumber(card);
+          updateChanges(card);
+          input.value = '';
+        } else {
+          input.focus();
+        }
+      }
+    }
 
-			// create entry object
-			if (input !== null) {
-				if (input.value !== '' && ev.target.id === `btn${id}`) {
-					const entry = createEntryItem(list, input);
-					card.entries.push(entry);
-					updateNumber(card);
-					updateChanges(card);
-					input.value = '';
-				} else {
-					input.focus();
-				}
-			}
-		}
+    // delete list item
+    if (/del_/.test(ev.target.id)) {
+      const listParent = ev.target.parentNode.parentNode;
+      const entryID = ev.target.parentNode.id;
+      listParent.removeChild(ev.target.parentNode);
+      card.entries = card.entries.filter(entry => entry.id !== entryID);
+      updateNumber(card);
+      updateChanges(card);
+    }
 
-		// delete list item
-		if (/del_/.test(ev.target.id)) {
-			const listParent = ev.target.parentNode.parentNode;
-			const entry_id = ev.target.parentNode.id;
-			listParent.removeChild(ev.target.parentNode);
-			card.entries = card.entries.filter(entry => entry.id !== entry_id);
-			updateNumber(card);
-			updateChanges(card);
-		}
+    // delete card element
+    if (/remove_/.test(ev.target.id)) {
+      const id = ev.target.id.replace('remove', '');
+      const el = document.getElementById(id);
+      if (el !== null) {
+        el.parentNode.removeChild(el);
+        APP.deleteCardItem({ id });
+      }
+    }
 
-		// delete card element
-		if (/remove_/.test(ev.target.id)) {
-			const id = ev.target.id.replace('remove', '');
-			const el = document.getElementById(id);
-			if (el !== null) {
-				el.parentNode.removeChild(el);
-				 APP.deleteCardItem({id});
-			}
-		}
+    // expand lists
+    if (ev.target.id === `expand_${card.id}`) {
+      ev.preventDefault();
+      const listsCard = document.getElementById(`card_${card.id}`);
+      const expanded = listsCard.getAttribute('data-expanded') === 'true';
+      listsCard.setAttribute('data-expanded', !expanded);
+      listsCard.classList.toggle('hided');
 
-		// expand lists
-		if (ev.target.id === `expand_${card.id}`) {
-			ev.preventDefault();
-			let listsCard = document.getElementById(`card_${card.id}`);
-			let expanded = listsCard.getAttribute('data-expanded') === 'true';
-			listsCard.setAttribute('data-expanded', !expanded);
-			listsCard.classList.toggle('hided');
-			
-			// select other cards and collapse them
-			const othersCards = document.querySelectorAll('.card-result__lists');
-			[...othersCards]
-				.filter(el => el.id !== `card_${card.id}`)
-				.filter(el => el.dataset.expanded === 'true')
-				.forEach(el => {
-					el.classList.add('hided');
-					el.setAttribute('data-expanded', 'false');
-				});
-			
-			if (!expanded){
-				APP.srollTo(listsCard.offsetTop);
-			}
-		}
-	};
+      // select other cards and collapse them
+      const othersCards = document.querySelectorAll('.card-result__lists');
+      [...othersCards]
+        .filter(el => el.id !== `card_${card.id}`)
+        .filter(el => el.dataset.expanded === 'true')
+        .forEach(el => {
+          el.classList.add('hided');
+          el.setAttribute('data-expanded', 'false');
+        });
 
-	cardElement.addEventListener('click', handleClick);
+      if (!expanded) {
+        APP.srollTo(listsCard.offsetTop);
+      }
+    }
+  };
+
+  cardElement.addEventListener('click', handleClick);
 };
 
 const createResultCard = async data => {
+  // get weather data
+  const weather = await APP.weather({
+    lat: data.position.latlng[0],
+    lon: data.position.latlng[0],
+    time: APP.moment(data.time)
+  });
 
-	// get weather data
-	const weather = await APP.weather({
-		lat: data.position.latlng[0],
-		lon: data.position.latlng[0],
-		time: APP.moment(data.time)
-	});
-	
-	const configs = {
-		id: APP.ID(),
-		country: data.position.name,
-		image: data.image,
-		entries: [],
-		time: data.time,
-		dailyWeather: weather.daily !== undefined ? weather.daily.data[0] : null
-	};
+  const configs = {
+    id: APP.ID(),
+    country: data.position.name,
+    image: data.image,
+    entries: [],
+    time: data.time,
+    dailyWeather: weather.daily !== undefined ? weather.daily.data[0] : null
+  };
 
-	createWeatherCard(configs);
-	const addCard = await APP.addData(configs);
-	
+  createWeatherCard(configs);
+  await APP.addData(configs);
 };
 
 module.exports = {
-	createResultCard,
-	createWeatherCard
+  createResultCard,
+  createWeatherCard
 };

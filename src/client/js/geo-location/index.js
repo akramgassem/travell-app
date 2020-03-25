@@ -1,33 +1,29 @@
 export default class UserLocation {
-  constructor() {
+  constructor () {
     this.element = null;
     this.showPosition = this.showPosition.bind(this);
     this.getLocation();
   }
 
-  static get() {
+  static get () {
     return new UserLocation();
   }
 
-  getLocation() {
-    this.element = document.getElementById("user-location");
+  getLocation () {
+    this.element = document.getElementById('user-location');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.showPosition);
     } else {
-      this.element.innerHTML = "Geolocation is not supported by this browser.";
+      this.element.innerHTML = 'Geolocation is not supported by this browser.';
     }
   }
 
-  async showPosition(position) {
-    this.element.setAttribute("data-lat", position.coords.latitude);
-    this.element.setAttribute("data-lon", position.coords.longitude);
+  async showPosition (position) {
+    this.element.setAttribute('data-lat', position.coords.latitude);
+    this.element.setAttribute('data-lon', position.coords.longitude);
 
+    // eslint-disable-next-line no-undef
     const data = await APP.getGeoNames({
-      lat: position.coords.latitude,
-      lon: position.coords.longitude
-    });
-
-    const Weather = await APP.weather({
       lat: position.coords.latitude,
       lon: position.coords.longitude
     });
@@ -35,7 +31,7 @@ export default class UserLocation {
     this._updateUi(data);
   }
 
-  _updateUi(data) {
+  _updateUi (data) {
     const { name, adminName1, countryName } = data.geonames[0];
 
     this.element.innerText = `Actual position: ${name}, ${adminName1}, ${countryName}`;

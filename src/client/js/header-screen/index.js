@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 
 export default class HeaderScreen {
-  constructor(query) {
+  constructor (query) {
     this.images = null;
     this.element = null;
     this.tags = null;
@@ -11,14 +12,14 @@ export default class HeaderScreen {
     this.timer = null;
     this.query = query;
     this.currentImageUrl = null;
-    //this.formSubmitted = false;
+    // this.formSubmitted = false;
 
     this._init();
   }
 
-   async _init() {
+  async _init () {
     this.element = document.querySelector('.pixa-image-container');
-    this.element.addEventListener("click", this._handleReload);
+    this.element.addEventListener('click', this._handleReload);
 
     this.tags = document.querySelector('#tags');
     this.link = document.querySelector('#link');
@@ -29,20 +30,19 @@ export default class HeaderScreen {
     this._populateUi();
   }
 
-  static init(query) {
+  static init (query) {
     return new HeaderScreen(query);
   }
 
-  async refresh(query) {
+  async refresh (query) {
     this.images = await APP.getImagesByQuery(query);
     this.currentImageUrl = this.images[APP.randomInt(this.images.length)].largeImageURL;
     window.clearTimeout(this.timer);
-      this._populateUi();
+    this._populateUi();
   }
-    
 
-  _populateUi() {
-    if(this.images !== null) {
+  _populateUi () {
+    if (this.images !== null) {
       this._updateFields(APP.randomInt(this.images.length));
       this.timer = setInterval(() => {
         this._updateFields(APP.randomInt(this.images.length));
@@ -50,24 +50,22 @@ export default class HeaderScreen {
     }
   }
 
-  _updateFields(int) {
+  _updateFields (int) {
     const image = this.images[int];
     this.element.style.backgroundImage = `url(${image.largeImageURL})`;
     this.tags.innerText = image.tags;
     this.link.href = image.pageURL;
     this.user.innerText = image.user;
     this.views.innerText = image.views;
-  
-    APP.MessagePopUp.show(image.tags, "info");
+
+    APP.MessagePopUp.show(image.tags, 'info');
   }
 
-  _handleReload(ev) {
-    if (ev.target.getAttribute("id") === "reload") {
+  _handleReload (ev) {
+    if (ev.target.getAttribute('id') === 'reload') {
       localStorage.clear();
       window.clearTimeout(this.timer);
       this._populateUi();
     }
   }
-
- 
 }

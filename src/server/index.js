@@ -1,7 +1,7 @@
 // Express js
 const express = require('express');
 const app = express();
-  
+
 // Middleware
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -13,22 +13,18 @@ app.use(bodyParser.json());
 // Cors for cross origin allowance
 app.use(cors());
 
-
 // listen to for incoming requests
 const PORT = 8081;
-app.listen(PORT,  () => {
+app.listen(PORT, () => {
   console.log(`Server app listening on port http://localhost:${PORT}`);
 });
-
 
 const router = require('./router.js');
 
 // app use api aylien
 app.use('/api/', router);
 
-
 // default uri
 app.get('/', (req, res) => {
-    res.sendFile('dist/index.html');
+  res.sendFile('dist/index.html');
 });
-

@@ -1,6 +1,7 @@
-const createElement = (classname = "", id = "", innerHTML = "") => {
-  const el = document.createElement("div");
-  el.setAttribute("id", id);
+/* eslint-disable no-undef */
+const createElement = (classname = '', id = '', innerHTML = '') => {
+  const el = document.createElement('div');
+  el.setAttribute('id', id);
   el.classList.add(classname);
   el.innerHTML = innerHTML;
   return el;
@@ -11,14 +12,13 @@ const randomInt = max => {
 };
 
 const logo = () => {
-  const logos = document.querySelectorAll(".logo");
-  [...logos].forEach(el => el.src = APP.logoImg);
+  const logos = document.querySelectorAll('.logo');
+  [...logos].forEach(el => { el.src = APP.logoImg; });
 };
-
 
 const ID = () => {
   return (
-    "_" +
+    '_' +
     Math.random()
       .toString(36)
       .substr(2, 9)
@@ -26,51 +26,48 @@ const ID = () => {
 };
 
 /**
- * 
+ *
  * @param {number} C SI Units - Temperature
  * @returns C and F units
  */
 const convertSI = (F) => {
-  return  Math.floor((F - 32) * 5/9 );
+  return Math.floor((F - 32) * 5 / 9);
 };
 
 const srollTo = (posTop) => {
-    let timer = setTimeout(() => {
-			window.scrollTo({
-				top: posTop - 250,
-				left: 0,
-				behavior: 'smooth'
-      });
-      window.clearTimeout(timer);
-    }, 300);
-    return timer;
-	};
-  
+  const timer = setTimeout(() => {
+    window.scrollTo({
+      top: posTop - 250,
+      left: 0,
+      behavior: 'smooth'
+    });
+    window.clearTimeout(timer);
+  }, 300);
+  return timer;
+};
 
 const weatherIcon = (str) => {
   const icons = {
     'clear-day': APP.clearDay,
     'clear-night': APP.clearNight,
-    'cloudy': APP.cloudy,
-    'fog': APP.fog,
+    cloudy: APP.cloudy,
+    fog: APP.fog,
     'partly-cloudy-day': APP.partlyCloudyDay,
     'partly-cloudy-night': APP.partlyCloudyNight,
-    'rain': APP.rain,
-    'sleet': APP.sleet,
-    'snow': APP.snow,
-    'wind': APP.wind
+    rain: APP.rain,
+    sleet: APP.sleet,
+    snow: APP.snow,
+    wind: APP.wind
   };
   return icons[str];
 };
 
-
-
 module.exports = {
-	createElement,
-	randomInt,
-	logo,
-	ID,
-	convertSI,
-	weatherIcon,
-	srollTo
+  createElement,
+  randomInt,
+  logo,
+  ID,
+  convertSI,
+  weatherIcon,
+  srollTo
 };

@@ -4,7 +4,7 @@ const history = require('./history.js');
 const pixa = require('./pixabay.js');
 const countries = require('./countries.js');
 
-// app listen to params 
+// app listen to params
 router.post('/add/', history.postData);
 router.post('/delete/', history.deleteDataItem);
 router.post('/update/', history.updateDataItem);

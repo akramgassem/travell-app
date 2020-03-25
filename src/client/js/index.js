@@ -19,25 +19,25 @@ import snow from '../images/weather-icons/snow.png';
 import wind from '../images/weather-icons/wind.png';
 
 import {
-	createElement,
-	randomInt,
-	logo,
-	ID,
-	convertSI,
-	weatherIcon,
-	srollTo
+  createElement,
+  randomInt,
+  logo,
+  ID,
+  convertSI,
+  weatherIcon,
+  srollTo
 } from './utils';
 import {
-	postData,
-	getData,
-	getCountries,
-	getImagesByQuery,
-	cachedImages,
-	getGeoNames,
-	weather,
-	addData,
-	deleteCardItem,
-	updateCardItem
+  postData,
+  getData,
+  getCountries,
+  getImagesByQuery,
+  cachedImages,
+  getGeoNames,
+  weather,
+  addData,
+  deleteCardItem,
+  updateCardItem
 } from './services/http-client';
 import MessagePopUp from './services/message-pop-up';
 import { createResultCard, createWeatherCard } from './result-card';
@@ -45,73 +45,70 @@ import HeaderScreen from './header-screen';
 import SearchBar from './search-bar';
 import UserLoaction from './geo-location';
 
-
-import moment from '../../../node_modules/moment';
+import moment from 'moment';
 
 export {
-	// Assets weather icons
-	clearDay,
-	clearNight,
-	cloudy,
-	fog,
-	partlyCloudyDay,
-	partlyCloudyNight,
-	rain,
-	sleet,
-	snow,
-	wind,
-	// logo and BG images
-	imageBg,
-	logoImg,
-	// Utils
-	randomInt,
-	createElement,
-	logo,
-	srollTo,
-	ID,
-	convertSI,
-	moment,
-	weatherIcon,
-	// http calls & services
-	MessagePopUp,
-	postData,
-	getData,
-	addData,
-	updateCardItem,
-	deleteCardItem,
-	getImagesByQuery,
-	cachedImages,
-	getCountries,
-	getGeoNames,
-	weather,
-	// Classes UI and forms
-	HeaderScreen,
-	SearchBar,
-	UserLoaction,
-	createResultCard,
-	createWeatherCard
+  // Assets weather icons
+  clearDay,
+  clearNight,
+  cloudy,
+  fog,
+  partlyCloudyDay,
+  partlyCloudyNight,
+  rain,
+  sleet,
+  snow,
+  wind,
+  // logo and BG images
+  imageBg,
+  logoImg,
+  // Utils
+  randomInt,
+  createElement,
+  logo,
+  srollTo,
+  ID,
+  convertSI,
+  moment,
+  weatherIcon,
+  // http calls & services
+  MessagePopUp,
+  postData,
+  getData,
+  addData,
+  updateCardItem,
+  deleteCardItem,
+  getImagesByQuery,
+  cachedImages,
+  getCountries,
+  getGeoNames,
+  weather,
+  // Classes UI and forms
+  HeaderScreen,
+  SearchBar,
+  UserLoaction,
+  createResultCard,
+  createWeatherCard
 };
 
+const handleLoad = async (ev) => {
+  // init logo
+  logo();
 
-const handleLoad = async (ev)=> {
-    // init logo
-    logo();
+  // Get user data from server
+  // eslint-disable-next-line no-undef
+  const get = await APP.getData('/all/');
+  get.data.forEach(element => {
+    console.log(element);
+    
+    // createWeatherCard(element);
+  });
 
-    // Get user data from server
-		const get = await APP.getData('/all/');
-		get.data.forEach(element => {
-			createWeatherCard(element);
-		});
-    
-    // init header Bg and Form
-    const header = HeaderScreen.init();
-		SearchBar.init(header);
-		
+  // init header Bg and Form
+  const header = HeaderScreen.init();
+  SearchBar.init(header);
 
-    
-    
-    //Request user geoposition 
-    // const userPos = UserLocation.get();
-   
+  // Request user geoposition
+  // const userPos = UserLocation.get();
 };
 document.addEventListener('DOMContentLoaded', handleLoad);
