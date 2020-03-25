@@ -32,9 +32,7 @@ export default class UserLocation {
   }
 
   _updateUi (data) {
-    const { name, adminName1, countryName } = data.geonames[0];
-
-    this.element.innerText = `Actual position: ${name}, ${adminName1}, ${countryName}`;
+    this.element.innerText = `Actual position: ${data.geonames[0].name}, ${data.geonames[0].adminName1}, ${data.geonames[0].countryName}`;
     this.element.classList.remove('is-hidden');
   }
 }

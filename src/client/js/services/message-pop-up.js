@@ -21,13 +21,8 @@ export default class MessagePopUp {
     article.setAttribute('id', this.id);
     article.classList.add('notification');
     article.classList.add(this._color);
-    article.innerHTML = `
-          <button id="${this.id}_delete" class="delete"></button>
-          ${this._message}
-        `;
-
+    article.innerHTML = `<button id="${this.id}_delete" class="delete"></button> ${this._message}`;
     this.element = article;
-
     _counter++;
     this._setTimeout(_counter * 1000, () => {
       const notifications = document.querySelector('.notifications');
@@ -48,7 +43,6 @@ export default class MessagePopUp {
     this._setTimeout(delay, () => {
       _counter--;
       el.classList.add('hide');
-
       if (condition) {
         this._setTimeout(600, () => {
           el.parentNode.removeChild(el);
