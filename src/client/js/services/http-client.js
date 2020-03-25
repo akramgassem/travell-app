@@ -78,8 +78,6 @@ const getImagesByQuery = async (query = ['paris']) => {
     query,
     categorie: 'places'
   });
-  console.log(imgs);
-  
   const successMessage = `Images from PixaBay :), Place: ${query}!`;
   const errorMessage = `No images for this Place: ${query}`;
   return cacheData('images', imgs, successMessage, errorMessage);

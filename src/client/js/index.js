@@ -99,9 +99,7 @@ const handleLoad = async (ev) => {
   // eslint-disable-next-line no-undef
   const get = await APP.getData('/all/');
   get.data.forEach(element => {
-    console.log(element);
-    
-    // createWeatherCard(element);
+    createWeatherCard(element);
   });
 
   // init header Bg and Form
