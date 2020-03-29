@@ -1,10 +1,5 @@
-import '../styles/layout.scss';
-import '../styles/base.scss';
-import '../styles/header.scss';
 import '../styles/main.scss';
-import '../styles/form.scss';
-import '../styles/footer.scss';
-import '../styles/results.scss';
+
 import imageBg from '../images/travel_app_bg.png';
 import logoImg from '../images/travel_app_logo.png';
 import clearDay from '../images/weather-icons/clear-day.png';
@@ -25,7 +20,7 @@ import {
   ID,
   convertSI,
   weatherIcon,
-  srollTo
+  srollTo,
 } from './utils';
 import {
   postData,
@@ -37,7 +32,7 @@ import {
   weather,
   addData,
   deleteCardItem,
-  updateCardItem
+  updateCardItem,
 } from './services/http-client';
 import MessagePopUp from './services/message-pop-up';
 import { createResultCard, createWeatherCard } from './result-card';
@@ -88,7 +83,7 @@ export {
   SearchBar,
   UserLoaction,
   createResultCard,
-  createWeatherCard
+  createWeatherCard,
 };
 
 const handleLoad = async (ev) => {
@@ -98,7 +93,7 @@ const handleLoad = async (ev) => {
   // Get user data from server
   // eslint-disable-next-line no-undef
   const get = await APP.getData('/all/');
-  get.data.forEach(element => {
+  get.data.forEach((element) => {
     createWeatherCard(element);
   });
 

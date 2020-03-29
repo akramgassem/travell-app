@@ -1,7 +1,12 @@
 {
-  "extends": "standard",
+  "extends": [
+    "standard",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "prettier"
+  ],
   "rules": {
-    "quotes": ["error", "single"],
-    "semi": "off"
+    "prettier/prettier": "error"
   }
 }

@@ -1,15 +1,15 @@
 const request = require('request');
-function sendRequest (URL, res) {
+function sendRequest(URL, res) {
   request(URL, (error, response, body) => {
     if (error === null) {
       res.send({
         message: response.statusCode,
-        data: body
+        data: body,
       });
     } else {
       res.send({
         message: error,
-        data: body
+        data: body,
       });
     }
   });

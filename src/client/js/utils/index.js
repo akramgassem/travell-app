@@ -7,39 +7,30 @@ const createElement = (classname = '', id = '', innerHTML = '') => {
   return el;
 };
 
-const randomInt = max => {
-  return Math.floor(Math.random() * Math.floor(max));
-};
+const randomInt = (max) => Math.floor(Math.random() * Math.floor(max));
 
 const logo = () => {
   const logos = document.querySelectorAll('.logo');
-  [...logos].forEach(el => { el.src = APP.logoImg; });
+  [...logos].forEach((el) => {
+    el.src = APP.logoImg;
+  });
 };
 
-const ID = () => {
-  return (
-    '_' +
-    Math.random()
-      .toString(36)
-      .substr(2, 9)
-  );
-};
+const ID = () => '_' + Math.random().toString(36).substr(2, 9);
 
 /**
  *
  * @param {number} C SI Units - Temperature
  * @returns C and F units
  */
-const convertSI = (F) => {
-  return Math.floor((F - 32) * 5 / 9);
-};
+const convertSI = (F) => Math.floor(((F - 32) * 5) / 9);
 
 const srollTo = (posTop) => {
   const timer = setTimeout(() => {
     window.scrollTo({
       top: posTop - 250,
       left: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
     window.clearTimeout(timer);
   }, 300);
@@ -57,7 +48,7 @@ const weatherIcon = (str) => {
     rain: APP.rain,
     sleet: APP.sleet,
     snow: APP.snow,
-    wind: APP.wind
+    wind: APP.wind,
   };
   return icons[str];
 };
@@ -69,5 +60,5 @@ module.exports = {
   ID,
   convertSI,
   weatherIcon,
-  srollTo
+  srollTo,
 };

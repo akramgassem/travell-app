@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 export default class SearchBar {
-  constructor (header) {
+  constructor(header) {
     this.header = header;
     this.form = null;
     this.help = null;
@@ -17,11 +17,11 @@ export default class SearchBar {
     this._place = null;
   }
 
-  static init (header) {
+  static init(header) {
     return new SearchBar(header);
   }
 
-  async _selectUi () {
+  async _selectUi() {
     this.form = document.querySelector('#searchBarForm');
     this.form.addEventListener('submit', this._formHandler, false);
     this.form.addEventListener('input', this._handleInput);
@@ -31,17 +31,17 @@ export default class SearchBar {
     this.countries = await this._getCountries();
   }
 
-  async _getCountries () {
+  async _getCountries() {
     const countries = await APP.getCountries();
     return countries;
   }
 
-  _formHandler (ev) {
+  _formHandler(ev) {
     ev.preventDefault();
     this._submitValue(ev);
   }
 
-  _handleInput () {
+  _handleInput() {
     const inputValue = this.form.placeInput.value;
     this._closeAllLists();
     if (!inputValue) {
@@ -52,12 +52,15 @@ export default class SearchBar {
     formContainer.appendChild(this._createList(inputValue));
   }
 
-  _handleKeyInput (ev) {
+  _handleKeyInput(ev) {
     let currentList = document.getElementById(
       this.idList + '_autocomplete-list'
     );
-    if (ev.keyCode === 27) { this._closeAllLists(); }
-    if (currentList) currentList = currentList.querySelectorAll('.coutrie-container');
+    if (ev.keyCode === 27) {
+      this._closeAllLists();
+    }
+    if (currentList)
+      currentList = currentList.querySelectorAll('.coutrie-container');
     if (ev.keyCode === 40) {
       this.currentFocus++;
       this._addActive(currentList);
@@ -75,9 +78,9 @@ export default class SearchBar {
     }
   }
 
-  _addActive (item) {
+  _addActive(item) {
     if (!item) return false;
-    [...item].forEach(el => {
+    [...item].forEach((el) => {
       el.classList.remove('autocomplete-active');
     });
     if (this.currentFocus >= item.length) this.currentFocus = 0;
@@ -85,24 +88,24 @@ export default class SearchBar {
     item[this.currentFocus].classList.add('autocomplete-active');
   }
 
-  _closeAllLists (elmnt) {
+  _closeAllLists(elmnt) {
     const items = document.getElementsByClassName('autocomplete-items');
-    [...items].forEach(item => {
+    [...items].forEach((item) => {
       if (elmnt !== item && elmnt !== this.form.placeInput) {
         item.parentNode.removeChild(item);
       }
     });
   }
 
-  _clickOut (ev) {
+  _clickOut(ev) {
     this._closeAllLists(ev.target);
   }
 
-  _createList (inputValue) {
+  _createList(inputValue) {
     const list = document.createElement('DIV');
     list.setAttribute('id', this.idList + '_autocomplete-list');
     list.setAttribute('class', 'autocomplete-items');
-    this.countries.forEach(item => {
+    this.countries.forEach((item) => {
       const matchName =
         item.name.substr(0, inputValue.length).toUpperCase() ===
         inputValue.toUpperCase();
@@ -111,7 +114,12 @@ export default class SearchBar {
         inputValue.toUpperCase();
 
       if (matchName | matchCapital) {
-        const listItem = this._createListItem(item, matchName, matchCapital, inputValue);
+        const listItem = this._createListItem(
+          item,
+          matchName,
+          matchCapital,
+          inputValue
+        );
         list.appendChild(listItem);
       }
     });
@@ -119,7 +127,7 @@ export default class SearchBar {
     return list;
   }
 
-  _submitValue (ev) {
+  _submitValue(ev) {
     if (this.form.placeInput.value === '') {
       this.form.placeInput.focus();
       ev.preventDefault();
@@ -135,7 +143,7 @@ export default class SearchBar {
       APP.createResultCard({
         position: this._place,
         time: this.form.timeInput.value,
-        image: this.header.currentImageUrl
+        image: this.header.currentImageUrl,
       });
       this.form.placeInput.value = '';
       this.form.timeInput.value = '';
@@ -143,7 +151,7 @@ export default class SearchBar {
     }
   }
 
-  _createListItem (item, matchName, matchCapital, inputValue) {
+  _createListItem(item, matchName, matchCapital, inputValue) {
     const listItem = document.createElement('div');
     listItem.classList.add('coutrie-container');
 
@@ -160,8 +168,12 @@ export default class SearchBar {
         </div>
 
         <p class="countrie-fields">
-          <span class="${matchName ? 'focus' : ''}">${nameLetterMatch}</span><span>${subName}</span>,
-          <span class="${matchCapital ? 'focus' : ''}">${capitalLetterMatch}</span><span>${subCapital}</span></span>
+          <span class="${
+            matchName ? 'focus' : ''
+          }">${nameLetterMatch}</span><span>${subName}</span>,
+          <span class="${
+            matchCapital ? 'focus' : ''
+          }">${capitalLetterMatch}</span><span>${subCapital}</span></span>
         </p>
       </div>
     `;
@@ -169,7 +181,9 @@ export default class SearchBar {
     listItem.innerHTML += `<input type='hidden' value="${item.name}">`;
 
     listItem.addEventListener('click', (ev) => {
-      this.form.placeInput.value = listItem.getElementsByTagName('input')[0].value;
+      this.form.placeInput.value = listItem.getElementsByTagName(
+        'input'
+      )[0].value;
       this._place = item;
       this._closeAllLists();
     });

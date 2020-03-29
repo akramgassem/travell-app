@@ -15,7 +15,9 @@ const geoNames = (req, res) => {
 
 const darkSky = (req, res) => {
   const { lat, lon, time } =
-  req.body !== {} ? req.body : { lat: '47.3', lon: '9', time: '2020-03-06T17:19:43+01:00' };
+    req.body !== {}
+      ? req.body
+      : { lat: '47.3', lon: '9', time: '2020-03-06T17:19:43+01:00' };
   const SKYURL = `https://api.darksky.net/forecast/${process.env.SKY_KEY}/${lat},${lon},${time}?units=si`;
   sendRequest(SKYURL, res);
 };
@@ -34,7 +36,7 @@ const getPIXA = (req, res) => {
     '&image_type=photo' +
     '&min_height=480' +
     '&orientation=horizontal' +
-    '&per_page=100';
+    '&per_page=6';
   sendRequest(URL, res);
 };
 
@@ -42,5 +44,5 @@ module.exports = {
   getAll,
   geoNames,
   getPIXA,
-  darkSky
+  darkSky,
 };

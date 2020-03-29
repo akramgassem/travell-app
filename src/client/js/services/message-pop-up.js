@@ -1,7 +1,7 @@
 let _counter = 0;
 
 export default class MessagePopUp {
-  constructor (message, color) {
+  constructor(message, color) {
     this._message = message;
     this._color = 'is-' + color;
     // eslint-disable-next-line no-undef
@@ -12,11 +12,11 @@ export default class MessagePopUp {
     this._createUi();
   }
 
-  static show (message, color) {
+  static show(message, color) {
     return new MessagePopUp(message, color);
   }
 
-  _createUi () {
+  _createUi() {
     const article = document.createElement('article');
     article.setAttribute('id', this.id);
     article.classList.add('notification');
@@ -33,13 +33,13 @@ export default class MessagePopUp {
     });
   }
 
-  _handleDelete (ev) {
+  _handleDelete(ev) {
     if (ev.target.getAttribute('id') === this.id + '_delete') {
       this._deleteElement(this.element, 50, false);
     }
   }
 
-  _deleteElement (el, delay, condition) {
+  _deleteElement(el, delay, condition) {
     this._setTimeout(delay, () => {
       _counter--;
       el.classList.add('hide');
@@ -51,7 +51,7 @@ export default class MessagePopUp {
     });
   }
 
-  _setTimeout (delay, fn) {
+  _setTimeout(delay, fn) {
     const h = setTimeout(() => {
       window.clearTimeout(h);
       fn();

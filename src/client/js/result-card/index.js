@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 let changes = [];
-const handleChange = async ev => {
+const handleChange = async (ev) => {
   const changeBtn = document.getElementById('changes');
   const cancelBtn = document.getElementById('cancel');
   if (ev.target.id === 'changes' && changes.length > 0) {
@@ -23,7 +23,7 @@ const handleChange = async ev => {
 
 document.addEventListener('click', handleChange);
 
-const updateChanges = card => {
+const updateChanges = (card) => {
   const changeBtn = document.getElementById('changes');
   const cancelBtn = document.getElementById('cancel');
   changeBtn.disabled = false;
@@ -31,11 +31,11 @@ const updateChanges = card => {
   changes.push(card);
 };
 
-const updateNumber = card => {
+const updateNumber = (card) => {
   const num = document.getElementById(`number${card.id}`);
   if (num) {
     const res = {};
-    card.entries.forEach(el => {
+    card.entries.forEach((el) => {
       if (!res[el.type]) {
         res[el.type] = 0;
       }
@@ -45,7 +45,7 @@ const updateNumber = card => {
     num.innerText =
       types.length === 0
         ? 0
-        : `${types.map(type => {
+        : `${types.map((type) => {
             return `${type}: ${res[type]}`;
           })}`;
   }
@@ -101,7 +101,7 @@ const weatherRange = (current, min, max) => {
 
   container.append(currentLabel);
 
-  degrees.forEach(degree => {
+  degrees.forEach((degree) => {
     const rot = Math.ceil((185 / degrees.length) * (degree / 2));
     const colorSpec = degree * 2 + 240;
 
@@ -175,7 +175,7 @@ const weatherRange = (current, min, max) => {
   return wrapper.innerHTML;
 };
 
-const parseTime = T => {
+const parseTime = (T) => {
   return APP.moment(new Date(T), 'YYYYMMDD');
 };
 
@@ -184,10 +184,10 @@ const createEntryItem = (list, input = null) => {
     input === null
       ? list
       : {
-        id: APP.ID(),
-        type: list.type,
-        value: input.value
-      };
+          id: APP.ID(),
+          type: list.type,
+          value: input.value,
+        };
 
   const itemList = document.createElement('li');
   itemList.setAttribute('id', entry.id);
@@ -205,7 +205,7 @@ const createEntryItem = (list, input = null) => {
   }
 };
 
-const createWeatherCard = async configs => {
+const createWeatherCard = async (configs) => {
   const imagefromCache = await APP.cachedImages();
   const card = {
     id: configs.id,
@@ -216,7 +216,7 @@ const createWeatherCard = async configs => {
         : imagefromCache[APP.randomInt(imagefromCache.length)].largeImageURL,
     dailyWeather: configs.dailyWeather,
     time: configs.time,
-    entries: configs.entries
+    entries: configs.entries,
   };
 
   const lists = [
@@ -224,20 +224,20 @@ const createWeatherCard = async configs => {
       id: APP.ID(),
       type: 'packing',
       name: 'packing list',
-      placeholder: 'First Pack!'
+      placeholder: 'First Pack!',
     },
     {
       id: APP.ID(),
       type: 'todo',
       name: 'add notes',
-      placeholder: 'First Task!'
+      placeholder: 'First Task!',
     },
     {
       id: APP.ID(),
       type: 'lodging',
       name: 'lodging Infos',
-      placeholder: 'Visit this hotel!'
-    }
+      placeholder: 'Visit this hotel!',
+    },
   ];
 
   const markup = `
@@ -277,7 +277,7 @@ const createWeatherCard = async configs => {
                 const {
                   apparentTemperatureMin,
                   temperatureMin,
-                  temperatureMax
+                  temperatureMax,
                 } = card.dailyWeather;
                 return weatherRange(
                   Math.floor(apparentTemperatureMin),
@@ -314,7 +314,7 @@ No data weather for ${card.country}, ${parseTime(card.time).fromNow()}!
     card.id
   }">
           ${lists
-            .map(item => {
+            .map((item) => {
               return `<div class="lists_item" id="${item.id}">
                   <p class="lists_title">${item.name}</p>
 <ul class="entries" id="${item.type}${item.id}">
@@ -358,10 +358,10 @@ No data weather for ${card.country}, ${parseTime(card.time).fromNow()}!
   parent.append(element);
 
   // create entries if entries exits
-  lists.forEach(item => {
+  lists.forEach((item) => {
     const ul = document.getElementById(`${item.type}${item.id}`);
     if (card.entries.length !== 0) {
-      card.entries.map(entry => {
+      card.entries.map((entry) => {
         if (entry.type === item.type) {
           const li = createEntryItem(entry);
           ul.prepend(li);
@@ -375,11 +375,11 @@ No data weather for ${card.country}, ${parseTime(card.time).fromNow()}!
   const cardElement = document.getElementById(card.id);
   APP.srollTo(cardElement.offsetTop);
 
-  const handleClick = ev => {
+  const handleClick = (ev) => {
     // handle input and add btns
     if (/input_/.test(ev.target.id) || /btn_/.test(ev.target.id)) {
       const id = ev.target.id.replace('btn', '');
-      const list = lists.filter(el => el.id === id)[0];
+      const list = lists.filter((el) => el.id === id)[0];
       const input = document.getElementById(`input${id}`);
 
       // create entry object
@@ -401,7 +401,7 @@ No data weather for ${card.country}, ${parseTime(card.time).fromNow()}!
       const listParent = ev.target.parentNode.parentNode;
       const entryID = ev.target.parentNode.id;
       listParent.removeChild(ev.target.parentNode);
-      card.entries = card.entries.filter(entry => entry.id !== entryID);
+      card.entries = card.entries.filter((entry) => entry.id !== entryID);
       updateNumber(card);
       updateChanges(card);
     }
@@ -427,9 +427,9 @@ No data weather for ${card.country}, ${parseTime(card.time).fromNow()}!
       // select other cards and collapse them
       const othersCards = document.querySelectorAll('.card-result__lists');
       [...othersCards]
-        .filter(el => el.id !== `card_${card.id}`)
-        .filter(el => el.dataset.expanded === 'true')
-        .forEach(el => {
+        .filter((el) => el.id !== `card_${card.id}`)
+        .filter((el) => el.dataset.expanded === 'true')
+        .forEach((el) => {
           el.classList.add('hided');
           el.setAttribute('data-expanded', 'false');
         });
@@ -443,12 +443,12 @@ No data weather for ${card.country}, ${parseTime(card.time).fromNow()}!
   cardElement.addEventListener('click', handleClick);
 };
 
-const createResultCard = async data => {
+const createResultCard = async (data) => {
   // get weather data
   const weather = await APP.weather({
     lat: data.position.latlng[0],
     lon: data.position.latlng[0],
-    time: APP.moment(data.time)
+    time: APP.moment(data.time),
   });
 
   const configs = {
@@ -457,7 +457,7 @@ const createResultCard = async data => {
     image: data.image,
     entries: [],
     time: data.time,
-    dailyWeather: weather.daily !== undefined ? weather.daily.data[0] : null
+    dailyWeather: weather.daily !== undefined ? weather.daily.data[0] : null,
   };
 
   createWeatherCard(configs);
@@ -466,5 +466,5 @@ const createResultCard = async data => {
 
 module.exports = {
   createResultCard,
-  createWeatherCard
+  createWeatherCard,
 };

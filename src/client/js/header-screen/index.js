@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 export default class HeaderScreen {
-  constructor (query) {
+  constructor(query) {
     this.images = null;
     this.element = null;
     this.tags = null;
@@ -17,7 +17,7 @@ export default class HeaderScreen {
     this._init();
   }
 
-  async _init () {
+  async _init() {
     this.element = document.querySelector('.pixa-image-container');
     this.element.addEventListener('click', this._handleReload);
 
@@ -30,18 +30,20 @@ export default class HeaderScreen {
     this._populateUi();
   }
 
-  static init (query) {
+  static init(query) {
     return new HeaderScreen(query);
   }
 
-  async refresh (query) {
+  async refresh(query) {
     this.images = await APP.getImagesByQuery(query);
-    this.currentImageUrl = this.images[APP.randomInt(this.images.length)].largeImageURL;
+    this.currentImageUrl = this.images[
+      APP.randomInt(this.images.length)
+    ].largeImageURL;
     window.clearTimeout(this.timer);
     this._populateUi();
   }
 
-  _populateUi () {
+  _populateUi() {
     if (this.images !== null) {
       this._updateFields(APP.randomInt(this.images.length));
       this.timer = setInterval(() => {
@@ -50,7 +52,7 @@ export default class HeaderScreen {
     }
   }
 
-  _updateFields (int) {
+  _updateFields(int) {
     const image = this.images[int];
     this.element.style.backgroundImage = `url(${image.largeImageURL})`;
     this.tags.innerText = image.tags;
@@ -61,7 +63,7 @@ export default class HeaderScreen {
     APP.MessagePopUp.show(image.tags, 'info');
   }
 
-  _handleReload (ev) {
+  _handleReload(ev) {
     if (ev.target.getAttribute('id') === 'reload') {
       localStorage.clear();
       window.clearTimeout(this.timer);
