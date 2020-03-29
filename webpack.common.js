@@ -10,7 +10,7 @@ module.exports = {
   stats: 'normal',
   output: {
     libraryTarget: 'var',
-    library: 'APP'
+    library: 'APP',
   },
   module: {
     rules: [
@@ -20,28 +20,28 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
-          'sass-loader'
-        ]
+          'sass-loader',
+        ],
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-            loader: 'file-loader'
-          }
-        ]
+            loader: 'file-loader',
+          },
+        ],
       },
       {
         test: '/.js$/',
         exclude: /node_modules/,
-        loader: 'babel-loader'
-      }
-    ]
+        loader: 'babel-loader',
+      },
+    ],
   },
   plugins: [
     new MiniCssExtractPlugin({ filename: '[name].css' }),
     new HtmlWebpackPlugin({
-      template: './src/client//views/index.html'
+      template: './src/client//views/index.html',
     }),
     new CleanWebpackPlugin({
       // Simulate the removal of files
@@ -50,7 +50,7 @@ module.exports = {
       verbose: false,
       // Automatically remove all unused webpack assets on rebuild
       cleanStaleWebpackAssets: true,
-      protectWebpackAssets: false
-    })
-  ]
+      protectWebpackAssets: false,
+    }),
+  ],
 };
