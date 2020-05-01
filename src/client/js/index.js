@@ -92,7 +92,7 @@ const handleLoad = async (ev) => {
 
   // Get user data from server
   // eslint-disable-next-line no-undef
-  const get = await APP.getData('/all/');
+  const get = await APP.getData('all');
   get.data.forEach((element) => {
     createWeatherCard(element);
   });

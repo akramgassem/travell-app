@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "jest --watch",
-    "start": "node src/server/index.js",
+    "start": "nodemon src/server/index.js",
     "build-prod": "webpack --config webpack.prod.js",
     "build-dev": "webpack-dev-server --config webpack.dev.js --open"
   },
@@ -25,11 +25,14 @@
   "author": "@akramg",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.2",
     "body-parser": "^1.19.0",
+    "connect-history-api-fallback": "^1.6.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "moment": "^2.24.0",
+    "nodemon": "^2.0.3",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5"
   },

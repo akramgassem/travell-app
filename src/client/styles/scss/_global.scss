@@ -1,11 +1,11 @@
 $picture-min-height: 480px;
 $picture-max-width: 1200px;
-
+$default-radius: 0;
 $font-special: "Patua One";
 
 .pixa-image-container {
   font-family: $font-special;
-  border-radius: 5px;
+  border-radius: $default-radius;
   max-width: $picture-max-width;
   height: 50vh;
   min-height: $picture-min-height;
@@ -65,15 +65,7 @@ $font-special: "Patua One";
 }
 
 .logo-container {
-  position: absolute;
-  top: 33%;
-  max-width: 280px;
-  min-width: 250px;
-
-  .logo-relative {
-    position: relative;
-    left: 10%;
-  }
+  height: 54px;
 }
 
 #user-location{

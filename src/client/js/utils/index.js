@@ -28,7 +28,7 @@ const convertSI = (F) => Math.floor(((F - 32) * 5) / 9);
 const srollTo = (posTop) => {
   const timer = setTimeout(() => {
     window.scrollTo({
-      top: posTop - 250,
+      top: posTop - 302,
       left: 0,
       behavior: 'smooth',
     });

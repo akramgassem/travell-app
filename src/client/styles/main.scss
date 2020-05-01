@@ -1,7 +1,8 @@
 
-@import './scss/layout/base';
-@import './scss/layout/global';
-@import './scss/layout/layout';
+@import './scss/variables';
+@import './scss/base';
+@import './scss/global';
+@import './scss/layout';
 
 @import './scss/components/header';
 @import './scss/components/form';

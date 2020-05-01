@@ -1,0 +1,19 @@
+GET http://localhost:8081/api
+
+###
+GET http://localhost:8081/api/all
+
+### 
+GET http://localhost:8081/api/countries 
+
+###
+POST http://localhost:8081/api/weather?lat=47&lon=9&time=2020-03-06T17:19:43+01:00
+
+### 
+GET http://localhost:8081/api/geonames?q=belg
+
+### 
+POST http://localhost:8081/api/weatherbit/current?city=Raleigh&state=NC&country=us
+
+###
+POST http://localhost:8081/api/weatherbit/forecast?city=Raleigh&state=NC
