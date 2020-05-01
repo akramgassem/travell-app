@@ -1,4 +1,7 @@
 /* eslint-disable no-undef */
+import ApiService from '../services/apiService';
+import Utilties from '../utils';
+
 let changes = [];
 const handleChange = async (ev) => {
   const changeBtn = document.getElementById('changes');
@@ -205,42 +208,44 @@ const createEntryItem = (list, input = null) => {
   }
 };
 
-const createWeatherCard = async (configs) => {
-  const imagefromCache = await APP.cachedImages();
-  const card = {
-    id: configs.id,
-    country: configs.country,
-    image:
-      configs.image !== null
-        ? configs.image
-        : imagefromCache[APP.randomInt(imagefromCache.length)].largeImageURL,
-    dailyWeather: configs.dailyWeather,
-    time: configs.time,
-    entries: configs.entries,
-  };
+const card = {
+  createWeatherCard: async (configs) => {
+    const imagefromCache = await ApiService.cachedImages();
+    const card = {
+      id: configs.id,
+      country: configs.country,
+      image:
+        configs.image !== null
+          ? configs.image
+          : imagefromCache[Utilties.randomInt(imagefromCache.length)]
+              .largeImageURL,
+      dailyWeather: configs.dailyWeather,
+      time: configs.time,
+      entries: configs.entries,
+    };
 
-  const lists = [
-    {
-      id: APP.ID(),
-      type: 'packing',
-      name: 'packing list',
-      placeholder: 'First Pack!',
-    },
-    {
-      id: APP.ID(),
-      type: 'todo',
-      name: 'add notes',
-      placeholder: 'First Task!',
-    },
-    {
-      id: APP.ID(),
-      type: 'lodging',
-      name: 'lodging Infos',
-      placeholder: 'Visit this hotel!',
-    },
-  ];
+    const lists = [
+      {
+        id: Utilties.ID(),
+        type: 'packing',
+        name: 'packing list',
+        placeholder: 'First Pack!',
+      },
+      {
+        id: Utilties.ID(),
+        type: 'todo',
+        name: 'add notes',
+        placeholder: 'First Task!',
+      },
+      {
+        id: Utilties.ID(),
+        type: 'lodging',
+        name: 'lodging Infos',
+        placeholder: 'Visit this hotel!',
+      },
+    ];
 
-  const markup = `
+    const markup = `
   <div class="card-result">
     <div class="card-result__header" style="background-image: url(${
       card.image
@@ -251,8 +256,8 @@ const createWeatherCard = async (configs) => {
         <div class="start">
           <div class="tags has-addons">
             <span id="number${card.id}" class="tag is-warning">${updateNumber(
-    card
-  )}</span>
+      card
+    )}</span>
           </div>
           <a id="expand_${
             card.id
@@ -311,8 +316,8 @@ No data weather for ${card.country}, ${parseTime(card.time).fromNow()}!
         </div>
 
 <div class="card-result__lists hided" data-expanded="false" id="card_${
-    card.id
-  }">
+      card.id
+    }">
           ${lists
             .map((item) => {
               return `<div class="lists_item" id="${item.id}">
@@ -347,124 +352,122 @@ No data weather for ${card.country}, ${parseTime(card.time).fromNow()}!
       </div>
   `;
 
-  // create element wrapper
-  const element = document.createElement('div');
-  element.setAttribute('id', card.id);
-  element.classList.add('card-wrapper');
-  element.innerHTML = markup;
+    // create element wrapper
+    const element = document.createElement('div');
+    element.setAttribute('id', card.id);
+    element.classList.add('card-wrapper');
+    element.innerHTML = markup;
 
-  // append to his parent
-  const parent = document.getElementById('results');
-  parent.append(element);
+    // append to his parent
+    const parent = document.getElementById('results');
+    parent.append(element);
 
-  // create entries if entries exits
-  lists.forEach((item) => {
-    const ul = document.getElementById(`${item.type}${item.id}`);
-    if (card.entries.length !== 0) {
-      card.entries.map((entry) => {
-        if (entry.type === item.type) {
-          const li = createEntryItem(entry);
-          ul.prepend(li);
-        }
-      });
-      updateNumber(card);
-    }
-  });
-
-  // select card by id
-  const cardElement = document.getElementById(card.id);
-  APP.srollTo(cardElement.offsetTop);
-
-  const handleClick = (ev) => {
-    // handle input and add btns
-    if (/input_/.test(ev.target.id) || /btn_/.test(ev.target.id)) {
-      const id = ev.target.id.replace('btn', '');
-      const list = lists.filter((el) => el.id === id)[0];
-      const input = document.getElementById(`input${id}`);
-
-      // create entry object
-      if (input !== null) {
-        if (input.value !== '' && ev.target.id === `btn${id}`) {
-          const entry = createEntryItem(list, input);
-          card.entries.push(entry);
-          updateNumber(card);
-          updateChanges(card);
-          input.value = '';
-        } else {
-          input.focus();
-        }
-      }
-    }
-
-    // delete list item
-    if (/del_/.test(ev.target.id)) {
-      const listParent = ev.target.parentNode.parentNode;
-      const entryID = ev.target.parentNode.id;
-      listParent.removeChild(ev.target.parentNode);
-      card.entries = card.entries.filter((entry) => entry.id !== entryID);
-      updateNumber(card);
-      updateChanges(card);
-    }
-
-    // delete card element
-    if (/remove_/.test(ev.target.id)) {
-      const id = ev.target.id.replace('remove', '');
-      const el = document.getElementById(id);
-      if (el !== null) {
-        el.parentNode.removeChild(el);
-        APP.deleteCardItem({ id });
-      }
-    }
-
-    // expand lists
-    if (ev.target.id === `expand_${card.id}`) {
-      ev.preventDefault();
-      const listsCard = document.getElementById(`card_${card.id}`);
-      const expanded = listsCard.getAttribute('data-expanded') === 'true';
-      listsCard.setAttribute('data-expanded', !expanded);
-      listsCard.classList.toggle('hided');
-
-      // select other cards and collapse them
-      const othersCards = document.querySelectorAll('.card-result__lists');
-      [...othersCards]
-        .filter((el) => el.id !== `card_${card.id}`)
-        .filter((el) => el.dataset.expanded === 'true')
-        .forEach((el) => {
-          el.classList.add('hided');
-          el.setAttribute('data-expanded', 'false');
+    // create entries if entries exits
+    lists.forEach((item) => {
+      const ul = document.getElementById(`${item.type}${item.id}`);
+      if (card.entries.length !== 0) {
+        card.entries.map((entry) => {
+          if (entry.type === item.type) {
+            const li = createEntryItem(entry);
+            ul.prepend(li);
+          }
         });
-
-      if (!expanded) {
-        APP.srollTo(listsCard.offsetTop);
+        updateNumber(card);
       }
-    }
-  };
+    });
 
-  cardElement.addEventListener('click', handleClick);
+    // select card by id
+    const cardElement = document.getElementById(card.id);
+    Utilties.srollTo(cardElement.offsetTop);
+
+    const handleClick = (ev) => {
+      // handle input and add btns
+      if (/input_/.test(ev.target.id) || /btn_/.test(ev.target.id)) {
+        const id = ev.target.id.replace('btn', '');
+        const list = lists.filter((el) => el.id === id)[0];
+        const input = document.getElementById(`input${id}`);
+
+        // create entry object
+        if (input !== null) {
+          if (input.value !== '' && ev.target.id === `btn${id}`) {
+            const entry = createEntryItem(list, input);
+            card.entries.push(entry);
+            updateNumber(card);
+            updateChanges(card);
+            input.value = '';
+          } else {
+            input.focus();
+          }
+        }
+      }
+
+      // delete list item
+      if (/del_/.test(ev.target.id)) {
+        const listParent = ev.target.parentNode.parentNode;
+        const entryID = ev.target.parentNode.id;
+        listParent.removeChild(ev.target.parentNode);
+        card.entries = card.entries.filter((entry) => entry.id !== entryID);
+        updateNumber(card);
+        updateChanges(card);
+      }
+
+      // delete card element
+      if (/remove_/.test(ev.target.id)) {
+        const id = ev.target.id.replace('remove', '');
+        const el = document.getElementById(id);
+        if (el !== null) {
+          el.parentNode.removeChild(el);
+          ApiService.deleteCardItem({ id });
+        }
+      }
+
+      // expand lists
+      if (ev.target.id === `expand_${card.id}`) {
+        ev.preventDefault();
+        const listsCard = document.getElementById(`card_${card.id}`);
+        const expanded = listsCard.getAttribute('data-expanded') === 'true';
+        listsCard.setAttribute('data-expanded', !expanded);
+        listsCard.classList.toggle('hided');
+
+        // select other cards and collapse them
+        const othersCards = document.querySelectorAll('.card-result__lists');
+        [...othersCards]
+          .filter((el) => el.id !== `card_${card.id}`)
+          .filter((el) => el.dataset.expanded === 'true')
+          .forEach((el) => {
+            el.classList.add('hided');
+            el.setAttribute('data-expanded', 'false');
+          });
+
+        if (!expanded) {
+          Utilties.srollTo(listsCard.offsetTop);
+        }
+      }
+    };
+
+    cardElement.addEventListener('click', handleClick);
+  },
+
+  createResultCard: async (data) => {
+    // get weather data
+    const weather = await ApiService.weather({
+      lat: data.position.latlng[0],
+      lon: data.position.latlng[0],
+      time: APP.moment(data.time),
+    });
+
+    const configs = {
+      id: Utilties.ID(),
+      country: data.position.name,
+      image: data.image,
+      entries: [],
+      time: data.time,
+      dailyWeather: weather.daily !== undefined ? weather.daily.data[0] : null,
+    };
+
+    card.createWeatherCard(configs);
+    await ApiService.addData(configs);
+  },
 };
 
-const createResultCard = async (data) => {
-  // get weather data
-  const weather = await APP.weather({
-    lat: data.position.latlng[0],
-    lon: data.position.latlng[0],
-    time: APP.moment(data.time),
-  });
-
-  const configs = {
-    id: APP.ID(),
-    country: data.position.name,
-    image: data.image,
-    entries: [],
-    time: data.time,
-    dailyWeather: weather.daily !== undefined ? weather.daily.data[0] : null,
-  };
-
-  createWeatherCard(configs);
-  await APP.addData(configs);
-};
-
-module.exports = {
-  createResultCard,
-  createWeatherCard,
-};
+export default card;

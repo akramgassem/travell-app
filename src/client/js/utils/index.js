@@ -1,64 +1,60 @@
 /* eslint-disable no-undef */
-const createElement = (classname = '', id = '', innerHTML = '') => {
-  const el = document.createElement('div');
-  el.setAttribute('id', id);
-  el.classList.add(classname);
-  el.innerHTML = innerHTML;
-  return el;
-};
+import assets from '../../images';
 
-const randomInt = (max) => Math.floor(Math.random() * Math.floor(max));
+const Utilties = {
+  createElement: (classname = '', id = '', innerHTML = '') => {
+    const el = document.createElement('div');
+    el.setAttribute('id', id);
+    el.classList.add(classname);
+    el.innerHTML = innerHTML;
+    return el;
+  },
 
-const logo = () => {
-  const logos = document.querySelectorAll('.logo');
-  [...logos].forEach((el) => {
-    el.src = APP.logoImg;
-  });
-};
+  randomInt: (max) => Math.floor(Math.random() * Math.floor(max)),
 
-const ID = () => '_' + Math.random().toString(36).substr(2, 9);
-
-/**
- *
- * @param {number} C SI Units - Temperature
- * @returns C and F units
- */
-const convertSI = (F) => Math.floor(((F - 32) * 5) / 9);
-
-const srollTo = (posTop) => {
-  const timer = setTimeout(() => {
-    window.scrollTo({
-      top: posTop - 302,
-      left: 0,
-      behavior: 'smooth',
+  logo: () => {
+    const logos = document.querySelectorAll('.logo');
+    [...logos].forEach((el) => {
+      el.src = assets.logoImg;
     });
-    window.clearTimeout(timer);
-  }, 300);
-  return timer;
+  },
+
+  ID: () => '_' + Math.random().toString(36).substr(2, 9),
+
+  /**
+   *
+   * @param {number} C SI Units - Temperature
+   * @returns C and F units
+   */
+  convertSI: (F) => Math.floor(((F - 32) * 5) / 9),
+
+  srollTo: (posTop) => {
+    const timer = setTimeout(() => {
+      window.scrollTo({
+        top: posTop - 302,
+        left: 0,
+        behavior: 'smooth',
+      });
+      window.clearTimeout(timer);
+    }, 300);
+    return timer;
+  },
+
+  weatherIcon: (str) => {
+    const icons = {
+      'clear-day': assets.clearDay,
+      'clear-night': assets.clearNight,
+      cloudy: assets.cloudy,
+      fog: assets.fog,
+      'partly-cloudy-day': assets.partlyCloudyDay,
+      'partly-cloudy-night': assets.partlyCloudyNight,
+      rain: assets.rain,
+      sleet: assets.sleet,
+      snow: assets.snow,
+      wind: assets.wind,
+    };
+    return icons[str];
+  },
 };
 
-const weatherIcon = (str) => {
-  const icons = {
-    'clear-day': APP.clearDay,
-    'clear-night': APP.clearNight,
-    cloudy: APP.cloudy,
-    fog: APP.fog,
-    'partly-cloudy-day': APP.partlyCloudyDay,
-    'partly-cloudy-night': APP.partlyCloudyNight,
-    rain: APP.rain,
-    sleet: APP.sleet,
-    snow: APP.snow,
-    wind: APP.wind,
-  };
-  return icons[str];
-};
-
-module.exports = {
-  createElement,
-  randomInt,
-  logo,
-  ID,
-  convertSI,
-  weatherIcon,
-  srollTo,
-};
+export default Utilties;

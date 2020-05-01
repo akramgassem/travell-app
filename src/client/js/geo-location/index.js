@@ -1,3 +1,5 @@
+import ApiService from '../services/apiService';
+
 export default class UserLocation {
   constructor() {
     this.element = null;
@@ -23,7 +25,7 @@ export default class UserLocation {
     this.element.setAttribute('data-lon', position.coords.longitude);
 
     // eslint-disable-next-line no-undef
-    const data = await APP.getGeoNames({
+    const data = await ApiService.getGeoNames({
       lat: position.coords.latitude,
       lon: position.coords.longitude,
     });

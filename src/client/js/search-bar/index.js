@@ -1,4 +1,8 @@
 /* eslint-disable no-undef */
+import ApiService from '../services/apiService';
+import Utilties from '../utils';
+import Card from '../result-card';
+
 export default class SearchBar {
   constructor(header) {
     this.header = header;
@@ -13,7 +17,7 @@ export default class SearchBar {
 
     // autocomplete values
     this.currentFocus = null;
-    this.idList = APP.ID();
+    this.idList = Utilties.ID();
     this._place = null;
   }
 
@@ -32,7 +36,7 @@ export default class SearchBar {
   }
 
   async _getCountries() {
-    const countries = await APP.getCountries();
+    const countries = await ApiService.getCountries();
     return countries;
   }
 
@@ -140,7 +144,7 @@ export default class SearchBar {
       ev.preventDefault();
       this.header.refresh([this.form.placeInput.value]);
 
-      APP.createResultCard({
+      Card.createResultCard({
         position: this._place,
         time: this.form.timeInput.value,
         image: this.header.currentImageUrl,

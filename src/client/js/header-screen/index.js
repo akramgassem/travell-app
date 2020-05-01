@@ -1,4 +1,7 @@
 /* eslint-disable no-undef */
+import ApiService from '../services/apiService';
+import Utilities from '../utils';
+import MessagePopUp from '../services/message-pop-up';
 
 export default class HeaderScreen {
   constructor(query) {
@@ -26,7 +29,7 @@ export default class HeaderScreen {
     this.user = document.querySelector('#user');
     this.views = document.querySelector('#views');
 
-    this.images = await APP.cachedImages(this.query);
+    this.images = await ApiService.cachedImages(this.query);
     this._populateUi();
   }
 
@@ -35,9 +38,9 @@ export default class HeaderScreen {
   }
 
   async refresh(query) {
-    this.images = await APP.getImagesByQuery(query);
+    this.images = await ApiService.getImagesByQuery(query);
     this.currentImageUrl = this.images[
-      APP.randomInt(this.images.length)
+      Utilities.randomInt(this.images.length)
     ].largeImageURL;
     window.clearTimeout(this.timer);
     this._populateUi();
@@ -45,9 +48,9 @@ export default class HeaderScreen {
 
   _populateUi() {
     if (this.images !== null) {
-      this._updateFields(APP.randomInt(this.images.length));
+      this._updateFields(Utilities.randomInt(this.images.length));
       this.timer = setInterval(() => {
-        this._updateFields(APP.randomInt(this.images.length));
+        this._updateFields(Utilities.randomInt(this.images.length));
       }, 50000);
     }
   }
@@ -60,7 +63,7 @@ export default class HeaderScreen {
     this.user.innerText = image.user;
     this.views.innerText = image.views;
 
-    APP.MessagePopUp.show(image.tags, 'info');
+    MessagePopUp.show(image.tags, 'info');
   }
 
   _handleReload(ev) {

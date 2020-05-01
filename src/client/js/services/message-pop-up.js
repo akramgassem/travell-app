@@ -1,3 +1,5 @@
+import Utilties from '../utils';
+
 let _counter = 0;
 
 export default class MessagePopUp {
@@ -5,7 +7,7 @@ export default class MessagePopUp {
     this._message = message;
     this._color = 'is-' + color;
     // eslint-disable-next-line no-undef
-    this.id = APP.ID();
+    this.id = Utilties.ID();
     this.element = null;
     this.timerDelete = null;
     this._handleDelete = this._handleDelete.bind(this);
