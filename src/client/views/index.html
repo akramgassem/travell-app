@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" >
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,66 +19,72 @@
   </head>
 
   <body class="main-grid">
-    <header>
-      <nav class="navbar " role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="#">
-      <img class="logo" src="" alt="travel-app logo" />
-    </a>
+    <header></header>
 
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-
-  <div id="navbarBasicExample" class="navbar-menu">
-    
-
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <button
-          type="submit"
-          class="is-primary is-small button is-rounded"
-          id="changes"
-          disabled
-          >
-          Save changes
-        </button>
-        <button
-        type="submit"
-        class="button is-rounded is-small"
-        id="cancel"
-        disabled
-        >
-        Cancel
-        </button>
-      </div>
-      </div>
-    </div>
-  </div>
-</nav>
-        
-    </header>
-    <div id="user-location" class="is-hidden"></div>
-    <aside>
+    <main id="main">
+      <div id="user-location" class="is-hidden"></div>
       <div class="pixa-image-container">
-        <!-------------- Overay container   ----------------------->
+        <div class="logo-container">
+          <div class="logo-relative">
+            <img class="logo" src="" alt="travel-app logo" />
+          </div>
+        </div>
+
+        <form id="searchBarForm">
+          <div class="form-container">
+            <div class="help-container">
+              <p id="place-help" class="help has-text-centered is-warning"></p>
+            </div>
+            <div class="form-relative">
+              <div class="field has-addons">
+                <div class="control">
+                  <input
+                    name="placeInput"
+                    class="input is-rounded is-medium"
+                    type="text"
+                    value=""
+                    autocomplete="off"
+                    placeholder="Where ?"
+                  />
+                </div>
+                <div class="control">
+                  <input
+                    name="timeInput"
+                    class="input is-rounded is-medium"
+                    type="date"
+                    value=""
+                    autocomplete="off"
+                    placeholder="When ?"
+                  />
+                </div>
+                <div class="control">
+                  <button
+                    name="submitButton"
+                    type="submit"
+                    class="button is-rounded is-medium is-warning"
+                  >
+                    <span class="icon has-text-dark is-medium ">
+                      <i class="fas fa-lg fa-map-marker-alt"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
         <div class="overlay"></div>
-        <!-------------- Reload Button   ----------------------->
+
         <button
           id="reload"
-          class="button reload is-small is-warning is-rounded"
+          class="button reload is-medium is-warning is-rounded"
         >
-          <span id="reload" class="icon is-small">
-            <i id="reload" class="fas fa-camera-retro"></i>
+          <span id="reload" class="icon is-small is-medium">
+            <i id="reload" class="fas fa-lg fa-camera-retro"></i>
           </span>
         </button>
-        <!-------------- Tags container   ----------------------->
+
         <div id="tags" class="tags"></div>
-        <!-------------- Links container   ----------------------->
         <div class="links">
           <a id="link" class="is-link" href="#" target="_blank">
             <div>Pixabay-user: <span id="user"></span></div>
@@ -86,64 +92,29 @@
           </a>
         </div>
       </div>
-      <!-------------- Search Bar form   ----------------------->
-        <form id="searchBarForm">
-          <div class="form-container">
-            <div class="help-container">
-              <p id="place-help" class="help has-text-centered is-warning"></p>
-            </div>
 
-            <!----------------------Place Inout------------------------------->
-            <div class="field">
-              <label class="label">Place want to go</label>
-              <div class="control">
-                <input
-                  name="placeInput"
-                  class="input is-rounded is-medium"
-                  type="text"
-                  value=""
-                  autocomplete="off"
-                  placeholder="Where ?"
-                  type="text"
-                  placeholder="Where ?"
-                />
-              </div>
-            </div>
-            <!----------------------Date Inout------------------------------->
-            <div class="field">
-              <label class="label">Date to go</label>
-              <div class="control">
-                <input
-                  name="timeInput"
-                  class="input is-rounded is-medium"
-                  type="date"
-                  value=""
-                  autocomplete="off"
-                  placeholder="When ?"
-                />
-              </div>
-            </div>
-
-            <div class="field is-grouped">
-              <div class="control">
-                <button
-                    name="submitButton"
-                    type="submit"
-                    class="button is-rounded is-small is-warning"
-                  >
-                  <span class="icon has-text-dark is-small">
-                    <i class="fas fa-map-marker-alt"></i>
-                  </span>
-                  <span>Make a plan</span>
-                  </button>
-              </div>
-              
-            </div>
-
+      <section class="section">
+        <div class="action-bar results">
+          <div class="buttons">
+            <button
+              type="submit"
+              class="is-primary is-small button is-rounded"
+              id="changes"
+              disabled
+            >
+              Save changes
+            </button>
+            <button
+              type="submit"
+              class="button is-rounded is-small"
+              id="cancel"
+              disabled
+            >
+              Cancel
+            </button>
           </div>
-        </form>
-    </aside>
-    <main id="main">
+        </div>
+      </section>
       <div id="results" class="results"></div>
     </main>
 

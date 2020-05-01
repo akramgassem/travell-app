@@ -1,5 +1,10 @@
 .form-container {
-  
+  position: absolute;
+  z-index: 20;
+  bottom: 20%;
+  width: 96%;
+  max-width: 680px;
+  min-width: 250px;
 
   .form-relative, .help-container {
     position: relative;
@@ -10,10 +15,6 @@
 
 .field.has-addons {
   justify-content: center;
-}
-
-.label {
-  color: #fc9086a9;
 }
 
 .input {

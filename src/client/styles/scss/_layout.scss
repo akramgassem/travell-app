@@ -1,10 +1,9 @@
 
 .main-grid {
     display: grid;
-    grid-template:  'head head head head head head'  3.25rem
-                    'aside aside aside aside aside aside' auto
-                    'main main main main main main' auto
-                    'footer footer footer footer footer footer' 60px / 1fr 1fr 1fr 1fr 1fr 1fr
+    grid-template: 'head head head' 8vh
+                    'main main main' minmax(100vh, auto)
+                    'footer footer footer' 60px
     ;
 }
 
@@ -22,30 +21,14 @@ header {
     }
 }
 
-aside {
-    grid-area: aside;
-    padding: 0 2em;
-}
-
 main {
     grid-area: main;
     background-image: url(../images/travel_app_bg.png);
     background-size: cover;
     background-position: bottom;
     transition: all .6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    overflow-y: auto;
 }
 
 footer {
     grid-area: footer;
-}
-
-@media screen and (min-width: 1024px) {
-.main-grid {
-    display: grid;
-    grid-template: 'head head head head head head'  3.25rem
-                    'aside aside main main main main' calc(100vh - (6em + 52px))
-                    'footer footer footer footer footer footer' 60px / 1fr 1fr 1fr 1fr 1fr 1fr
-    ;
-}
 }
