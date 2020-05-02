@@ -116,7 +116,7 @@ const ApiService = {
   },
   getCountries: async () => {
     if (localStorage.getItem('countries') === null) {
-      const countriesResponse = await get('countries');
+      const countriesResponse = await ApiService.get('countries');
       return ApiService.cacheData('countries', countriesResponse);
     } else {
       const fromCache = localStorage.getItem('countries');
