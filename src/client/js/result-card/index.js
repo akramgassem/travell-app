@@ -10,7 +10,7 @@ const handleChange = async (ev) => {
     ev.preventDefault();
     changeBtn.classList.add('is-loading');
 
-    const upd = await APP.updateCardItem(changes);
+    const upd = await ApiService.updateCardItem(changes);
     if (upd) {
       changeBtn.classList.remove('is-loading');
       changeBtn.disabled = true;
@@ -187,7 +187,7 @@ const createEntryItem = (list, input = null) => {
     input === null
       ? list
       : {
-          id: APP.ID(),
+          id: Utilties.ID(),
           type: list.type,
           value: input.value,
         };
