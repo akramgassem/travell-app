@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
@@ -48,15 +47,6 @@ module.exports = {
     new MiniCssExtractPlugin({ filename: '[name].css' }),
     new HtmlWebpackPlugin({
       template: './src/client//views/index.html',
-    }),
-    new CleanWebpackPlugin({
-      // Simulate the removal of files
-      dry: true,
-      // Write Logs to Console
-      verbose: false,
-      // Automatically remove all unused webpack assets on rebuild
-      cleanStaleWebpackAssets: true,
-      protectWebpackAssets: false,
     }),
   ],
 };

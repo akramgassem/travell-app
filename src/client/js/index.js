@@ -44,7 +44,7 @@ const handleLoad = async (ev) => {
   const header = HeaderScreen.init();
   SearchBar.init(header);
 
-  const field = document.querySelector('.field');
+  const field = document.querySelector('.js-field');
   Breakpoints();
   Breakpoints.current();
 
