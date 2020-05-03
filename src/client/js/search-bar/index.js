@@ -63,7 +63,7 @@ export default class SearchBar {
       this._closeAllLists();
       if (rr.geonames.length > 0) {
         this.geoList = rr;
-        const formContainer = this.form.querySelector('.form-container');
+        const formContainer = this.form.querySelector('.form-relative');
         formContainer.appendChild(this._createCountriesList(inputValue));
       }
     });

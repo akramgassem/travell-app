@@ -1,7 +1,7 @@
 const request = require('request');
 
-function sendRequest(URL, res) {
-  request(URL, (error, response, body) => {
+function sendRequest(URI, res) {
+  request(URI, (error, response, body) => {
     if (error === null) {
       res.send({
         message: response.statusCode,

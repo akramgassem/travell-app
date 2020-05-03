@@ -1,7 +1,7 @@
-GET http://localhost:8081/api
+GET http://localhost:8081/
 
 ###
-GET http://localhost:8081/api/all
+GET http://localhost:8081/api
 
 ### 
 GET http://localhost:8081/api/countries 

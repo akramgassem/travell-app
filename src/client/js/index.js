@@ -11,6 +11,8 @@ import UserLoaction from './geo-location';
 
 import moment from 'moment';
 
+import Breakpoints from 'breakpoints-js';
+
 export {
   // Assets weather icons
   assets,
@@ -25,6 +27,7 @@ export {
   SearchBar,
   UserLoaction,
   card,
+  Breakpoints,
 };
 
 const handleLoad = async (ev) => {
@@ -41,7 +44,36 @@ const handleLoad = async (ev) => {
   const header = HeaderScreen.init();
   SearchBar.init(header);
 
+  const field = document.querySelector('.field');
+  Breakpoints();
+  Breakpoints.current();
+
+  Breakpoints.on('xs', {
+    enter: function () {
+      field.classList.remove('has-addons');
+    },
+  });
+
+  Breakpoints.on('sm', {
+    enter: function () {
+      field.classList.add('has-addons');
+    },
+  });
+
   // Request user geoposition
   // const userPos = UserLocation.get();
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/service-worker.js')
+        .then((registration) => {
+          console.log('SW registered: ', registration);
+        })
+        .catch((registrationError) => {
+          console.log('SW registration failed: ', registrationError);
+        });
+    });
+  }
 };
+
 document.addEventListener('DOMContentLoaded', handleLoad);

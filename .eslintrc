@@ -8,5 +8,9 @@
   ],
   "rules": {
     "prettier/prettier": "error"
-  }
+  },
+  "ignorePatterns": [
+    "*.test.js",
+    "node_modules/"
+  ]
 }

@@ -8,10 +8,7 @@
       src="https://kit.fontawesome.com/00118e4b7c.js"
       crossorigin="anonymous"
     ></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"
-    />
+    
     <script
       defer
       src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
@@ -19,7 +16,6 @@
   </head>
 
   <body class="main-grid">
-    <header></header>
 
     <main id="main">
       <div id="user-location" class="is-hidden"></div>
@@ -36,12 +32,12 @@
               <p id="place-help" class="help has-text-centered is-warning"></p>
             </div>
             <div class="form-relative">
-              <div class="field has-addons">
+              <div class="field ">
                 <div class="control is-relative">
                   <div class="loading"><p>Loading...</p></div>
                   <input
                     name="placeInput"
-                    class="input is-rounded is-medium"
+                    class="input  is-medium"
                     type="text"
                     value=""
                     autocomplete="off"
@@ -51,7 +47,7 @@
                 <div class="control">
                   <input
                     name="timeInput"
-                    class="input is-rounded is-medium"
+                    class="input  is-medium"
                     type="date"
                     value=""
                     autocomplete="off"
@@ -62,10 +58,13 @@
                   <button
                     name="submitButton"
                     type="submit"
-                    class="button is-rounded is-medium is-warning"
+                    class="button is-medium is-warning"
                   >
                     <span class="icon has-text-dark is-medium ">
                       <i class="fas fa-lg fa-map-marker-alt"></i>
+                    </span>
+                    <span>
+                      Travel
                     </span>
                   </button>
                 </div>
@@ -124,17 +123,8 @@
         <p>Developped by Akram Gassem</p>
       </div>
     </footer>
-    <script>
-      // Check that service workers are supported
-      /**
-       if ('serviceWorker' in navigator) {
-           // Use the window load event to keep the page load performant
-           window.addEventListener('load', () => {
-               navigator.serviceWorker.register('/service-worker.js');
-              });
-          }
-      */
-    </script>
+    
     <div class="notifications"></div>
+
   </body>
 </html>

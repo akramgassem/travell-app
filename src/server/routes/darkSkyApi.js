@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 // env Config
 require('dotenv').config();
-const sendRequest = require('../utils');
+const sendRequest = require('../request');
 
 router.route('/weather').post((req, res) => {
   const { lat, lon, time } = req.body;

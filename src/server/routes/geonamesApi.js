@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 // env Config
 require('dotenv').config();
-const sendRequest = require('../utils');
+const sendRequest = require('../request');
 
 router.route('/geonames/query').post((req, res) => {
   const { query } = req.query;

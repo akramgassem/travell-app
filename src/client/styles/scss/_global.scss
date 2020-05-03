@@ -5,12 +5,14 @@ $font-special: "Patua One";
 
 .pixa-image-container {
   font-family: $font-special;
-  border-radius: 5px;
   max-width: $picture-max-width;
-  height: 50vh;
-  min-height: $picture-min-height;
   margin: auto;
-  margin-top: 16px;
+  @include respond-to('medium') {
+    height: 50vh;
+    margin-top: 16px;
+    border-radius: 5px;
+    min-height: $picture-min-height;
+  }
   background-color: transparent;
   background-position: center;
   background-repeat: no-repeat;
@@ -19,8 +21,10 @@ $font-special: "Patua One";
 }
 
 .overlay {
-  max-width: $picture-max-width;
-  height: 50vh;
+  @include respond-to('medium') {
+    max-width: $picture-max-width;
+    height: 50vh;
+  }
   min-height: $picture-min-height;
   background: rgb(29, 29, 32);
   background: linear-gradient(
@@ -35,7 +39,9 @@ $font-special: "Patua One";
   position: absolute;
   top: 6px;
   right: 6px;
-  opacity: .2;
+  @include respond-to('medium') {
+    opacity: .2;
+  }
   &:hover {
     opacity: 1;
   }
@@ -66,9 +72,13 @@ $font-special: "Patua One";
 
 .logo-container {
   position: absolute;
-  top: 33%;
-  max-width: 280px;
-  min-width: 250px;
+  top: 8px;
+  width: 100px;
+  @include respond-to('small') {
+    top: 33%;
+    max-width: 280px;
+    min-width: 250px;
+  }
 
   .logo-relative {
     position: relative;

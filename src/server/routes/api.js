@@ -3,7 +3,8 @@ const router = express.Router();
 
 /* GET api listing. */
 router.get('/', (req, res) => {
-  res.send('api works');
+  res.send({ message: 'api works' });
+  res.sendStatus(200);
 });
 
 module.exports = router;

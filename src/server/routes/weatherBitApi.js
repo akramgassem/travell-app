@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 // env Config
 require('dotenv').config();
-const sendRequest = require('../utils');
+const sendRequest = require('../request');
 
 function url(req, res) {
   const { city, state, country } = req.query;

@@ -13,8 +13,23 @@
   }
 }
 
-.field.has-addons {
-  justify-content: center;
+.field {
+  justify-content: start;
+  flex-direction: column;
+  @include respond-to('small') {
+    justify-content: center;
+    flex-direction: row;
+    
+   }
+
+   .control {
+     margin-top: 1rem;
+     @include respond-to('small') {
+      margin-top: 0;
+    
+   }
+   }
+  
 }
 .loading {
   position: absolute;
@@ -63,8 +78,7 @@
   border-top: none;
   z-index: 99;
   /*position the autocomplete items to be the same width as the container:*/
-  top: 100%;
-  left: 90px;
+  top: 50px;
   max-width: 280px;
   max-height: 325px;
   overflow-y: scroll;
