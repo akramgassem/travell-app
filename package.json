@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "test": "jest --runInBand --detectOpenHandles --testTimeout=20000",
+    "test": "jest --watch --runInBand --detectOpenHandles --testTimeout=20000",
     "start": "nodemon src/server/start.js",
     "http": "http-server dist",
     "build-prod": "webpack --config webpack.prod.js",

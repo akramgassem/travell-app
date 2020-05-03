@@ -7,9 +7,5 @@ app.listen(PORT, () => {
   console.log(`Server app listening on port http://localhost:${PORT}`);
 });
 
-// default uri
-app.get('/', (req, res) => {
-  res.sendFile('dist/index.html');
-});
 // app use api
 app.use('/api', routes);
