@@ -11,7 +11,9 @@
   },
   "scripts": {
     "test": "jest --watch --runInBand --detectOpenHandles --testTimeout=20000",
-    "start": "node src/server/start.js",
+    "start": "npm-run-all --parallel build-prod server",
+    "serve": "npm-run-all --parallel build-dev server",
+    "server": "node src/server/start.js",
     "http": "http-server dist",
     "build-prod": "webpack --config webpack.prod.js",
     "build-dev": "webpack-dev-server --config webpack.dev.js --open"
@@ -67,6 +69,7 @@
     "jest": "^25.5.4",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.13.1",
+    "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-cli": "^7.1.0",
     "postcss-loader": "^3.0.0",
