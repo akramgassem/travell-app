@@ -28,22 +28,15 @@ app.listen(PORT, () => {
 });
 
 // app use api
-app.use(
-  '/api',
-  [
-    api,
-    historyApi,
-    geonamesApi,
-    countriesApi,
-    darkSkyApi,
-    pixaApi,
-    weatherBitApi,
-  ],
-  (req, res) => {
-    console.log(req.body);
-    console.log(res);
-  }
-);
+app.use('/api', [
+  api,
+  historyApi,
+  geonamesApi,
+  countriesApi,
+  darkSkyApi,
+  pixaApi,
+  weatherBitApi,
+]);
 
 // default uri
 app.get('/', (req, res) => {

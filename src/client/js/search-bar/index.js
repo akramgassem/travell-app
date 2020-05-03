@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import ApiService from '../services/apiService';
 import Utilties from '../utils';
-import Card from '../result-card';
+import card from '../result-card';
 
 export default class SearchBar {
   constructor(header) {
@@ -13,12 +13,15 @@ export default class SearchBar {
     this._handleKeyInput = this._handleKeyInput.bind(this);
     this._clickOut = this._clickOut.bind(this);
     this.countries = null;
+    this.geoList = null;
     this._selectUi();
 
     // autocomplete values
     this.currentFocus = null;
     this.idList = Utilties.ID();
     this._place = null;
+    this.choice = false;
+    this._handleLoading(false);
   }
 
   static init(header) {
@@ -47,13 +50,38 @@ export default class SearchBar {
 
   _handleInput() {
     const inputValue = this.form.placeInput.value;
-    this._closeAllLists();
-    if (!inputValue) {
+    if (inputValue.length === 0) {
+      this.choice = false;
+    }
+    if (!inputValue || inputValue.length < 4 || this.choice) {
       return false;
     }
     this.currentFocus = -1;
-    const formContainer = this.form.querySelector('.form-container');
-    formContainer.appendChild(this._createList(inputValue));
+    this._handleLoading(true);
+    this._getGeoCountries(inputValue).then((rr) => {
+      this._handleLoading(false);
+      this._closeAllLists();
+      if (rr.geonames.length > 0) {
+        this.geoList = rr;
+        const formContainer = this.form.querySelector('.form-container');
+        formContainer.appendChild(this._createCountriesList(inputValue));
+      }
+    });
+  }
+
+  _handleLoading(loading) {
+    const loadingElm = document.querySelector('.loading');
+    if (loading) {
+      loadingElm.classList.add('show');
+    } else {
+      loadingElm.classList.remove('show');
+    }
+  }
+
+  async _getGeoCountries(value) {
+    return await ApiService.getGeoNamesByQuery({
+      query: value.replace(' ', ''),
+    });
   }
 
   _handleKeyInput(ev) {
@@ -105,23 +133,34 @@ export default class SearchBar {
     this._closeAllLists(ev.target);
   }
 
-  _createList(inputValue) {
+  _createCountriesList(inputValue) {
     const list = document.createElement('DIV');
     list.setAttribute('id', this.idList + '_autocomplete-list');
     list.setAttribute('class', 'autocomplete-items');
-    this.countries.forEach((item) => {
-      const matchName =
-        item.name.substr(0, inputValue.length).toUpperCase() ===
-        inputValue.toUpperCase();
-      const matchCapital =
-        item.capital.substr(0, inputValue.length).toUpperCase() ===
-        inputValue.toUpperCase();
 
-      if (matchName | matchCapital) {
-        const listItem = this._createListItem(
+    if (this.geoList.geonames.length === 0) return;
+
+    this.geoList.geonames.forEach((item) => {
+      const matchContryName = item.countryName
+        ? item.countryName.substr(0, inputValue.length).toUpperCase() ===
+          inputValue.toUpperCase()
+        : false;
+      const matchAdminName = item.adminName1
+        ? item.adminName1.substr(0, inputValue.length).toUpperCase() ===
+          inputValue.toUpperCase()
+        : false;
+
+      const matchTopoName = item.toponymName
+        ? item.toponymName.substr(0, inputValue.length).toUpperCase() ===
+          inputValue.toUpperCase()
+        : false;
+
+      if (matchContryName || matchAdminName || matchTopoName) {
+        const listItem = this._createCountriesListItem(
           item,
-          matchName,
-          matchCapital,
+          matchContryName,
+          matchAdminName,
+          matchTopoName,
           inputValue
         );
         list.appendChild(listItem);
@@ -144,7 +183,7 @@ export default class SearchBar {
       ev.preventDefault();
       this.header.refresh([this.form.placeInput.value]);
 
-      Card.createResultCard({
+      card.createResultCard({
         position: this._place,
         time: this.form.timeInput.value,
         image: this.header.currentImageUrl,
@@ -152,45 +191,66 @@ export default class SearchBar {
       this.form.placeInput.value = '';
       this.form.timeInput.value = '';
       this.help.innerText = '';
+      this.choice = false;
     }
   }
 
-  _createListItem(item, matchName, matchCapital, inputValue) {
+  _createCountriesListItem(
+    item,
+    matchContryName,
+    matchAdminName,
+    matchTopoName,
+    inputValue
+  ) {
     const listItem = document.createElement('div');
     listItem.classList.add('coutrie-container');
 
-    const nameLetterMatch = item.name.substr(0, inputValue.length);
-    const subName = item.name.substr(inputValue.length);
-    const capitalLetterMatch = item.capital.substr(0, inputValue.length);
-    const subCapital = item.capital.substr(inputValue.length);
+    const nameLetterMatch = item.countryName.substr(0, inputValue.length);
+    const subName = item.countryName.substr(inputValue.length);
+    const capitalLetterMatch = item.adminName1.substr(0, inputValue.length);
+    const subCapital = item.adminName1.substr(inputValue.length);
+    const topoLetterMatch = item.toponymName.substr(0, inputValue.length);
+    const subTopo = item.toponymName.substr(inputValue.length);
+
+    const countrie = this.countries.filter((countrie) =>
+      countrie.alpha2Code.match(item.countryCode)
+    )[0];
 
     listItem.innerHTML = `
     
     <div class="countrie-name">
         <div class="flag">
-            <img src="${item.flag}" alt="${item.name}">
+            <img src="${countrie.flag}" alt="${item.countryName}">
         </div>
 
         <p class="countrie-fields">
           <span class="${
-            matchName ? 'focus' : ''
+            matchContryName ? 'focus' : ''
           }">${nameLetterMatch}</span><span>${subName}</span>,
           <span class="${
-            matchCapital ? 'focus' : ''
+            matchAdminName ? 'focus' : ''
           }">${capitalLetterMatch}</span><span>${subCapital}</span></span>
+          <span class="${
+            matchTopoName ? 'focus' : ''
+          }">${topoLetterMatch}</span><span>${subTopo}</span></span>
         </p>
       </div>
     `;
 
-    listItem.innerHTML += `<input type='hidden' value="${item.name}">`;
+    listItem.innerHTML += `<input type='hidden' value="${item.toponymName}, ${item.countryName}">`;
 
     listItem.addEventListener('click', (ev) => {
       this.form.placeInput.value = listItem.getElementsByTagName(
         'input'
       )[0].value;
+      this.choice = true;
       this._place = item;
       this._closeAllLists();
     });
     return listItem;
+  }
+
+  _formatter(str) {
+    return str.replace(' ', '').toUpperCase();
   }
 }

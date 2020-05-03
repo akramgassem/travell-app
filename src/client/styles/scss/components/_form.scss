@@ -16,7 +16,20 @@
 .field.has-addons {
   justify-content: center;
 }
+.loading {
+  position: absolute;
+  top: 13px;
+  right: 0;
+  z-index: 5;
+  color: #d2d2d2a9;
+  opacity: 0;
+  transition: opacity 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  &.show {
+    opacity: 1;
+    transition: opacity 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
 
+}
 .input {
   background-color: #1d1d29d0;
   border-color: transparent;
@@ -53,6 +66,28 @@
   top: 100%;
   left: 90px;
   max-width: 280px;
+  max-height: 325px;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+&::-webkit-scrollbar-track {
+  background: #272727;
+}
+
+/* Handle */
+&::-webkit-scrollbar-thumb {
+  background: #fc9086ea;
+  &:hover {
+  background: #fda198e8;
+
+  }
+}
+
+
   & .autocomplete-active {
     background-color: #fc9086 !important;
     color: #1a1a1a;

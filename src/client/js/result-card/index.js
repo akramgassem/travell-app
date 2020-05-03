@@ -451,8 +451,8 @@ No data weather for ${card.country}, ${parseTime(card.time).fromNow()}!
   createResultCard: async (data) => {
     // get weather data
     const weather = await ApiService.weather({
-      lat: data.position.latlng[0],
-      lon: data.position.latlng[0],
+      lat: data.position.lat,
+      lon: data.position.lng,
       time: APP.moment(data.time),
     });
 

@@ -9,7 +9,7 @@ const ApiService = {
    * @param {String} endpoint URL API
    * @param {{}} data
    */
-  post: async (endpoint, data) => {
+  post: async (endpoint, { data = {}, params } = {}) => {
     const request = {
       method: 'POST',
       headers: {
@@ -17,7 +17,9 @@ const ApiService = {
       },
       body: JSON.stringify(data),
     };
-    const res = await fetch(`${BASEURL}${endpoint}`, request);
+    const url = new URL(`${BASEURL}${endpoint}`);
+    if (params !== undefined) url.searchParams.append('query', params);
+    const res = await fetch(url, request);
     return await res.json();
   },
 
@@ -70,7 +72,7 @@ const ApiService = {
   },
 
   addData: async (data) => {
-    const add = await ApiService.post('all', data);
+    const add = await ApiService.post('all', { data });
     return add;
   },
 
@@ -123,15 +125,23 @@ const ApiService = {
       return JSON.parse(fromCache);
     }
   },
-  getGeoNames: async ({ lat, lon }) => {
-    const geoNames = await ApiService.post('geonames', { lat, lon });
+  getGeoNamesPosition: async ({ lat, lon }) => {
+    const geoNames = await ApiService.post('geonames/position', {
+      params: { lat, lon },
+    });
+    return JSON.parse(geoNames.data);
+  },
+  getGeoNamesByQuery: async ({ query }) => {
+    const geoNames = await ApiService.post('geonames/query', { params: query });
     return JSON.parse(geoNames.data);
   },
   weather: async ({ lat, lon, time }) => {
     const weather = await ApiService.post('weather', {
-      lat,
-      lon,
-      time: time.format(),
+      data: {
+        lat,
+        lon,
+        time: time.format(),
+      },
     });
     if (weather.message.errno !== 'ENOTFOUND') {
       return JSON.parse(weather.data);
@@ -140,8 +150,10 @@ const ApiService = {
 
   getImagesByQuery: async (query = ['paris']) => {
     const imagesResponse = await ApiService.post('pixa', {
-      query,
-      categorie: 'places',
+      data: {
+        query,
+        categorie: 'places',
+      },
     });
     return ApiService.cacheData('images', imagesResponse);
   },
