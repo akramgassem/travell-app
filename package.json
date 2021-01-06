@@ -34,7 +34,7 @@
   "author": "@akramg",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "breakpoints-js": "^1.0.6",
     "bulma": "^0.8.2",
